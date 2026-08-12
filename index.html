@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IX-H · Kelas Horor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+    
+    /* ========== PLAYLIST LAGU (PAGINASI) ========== */
+.playlist-section {
+    margin: 60px 0 40px;
+    padding: 25px 20px;
+    background: var(--card-bg);
+    border: 2px solid #3a1e1e;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    transition: all var(--transition);
+}
+.playlist-section:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 40px rgba(139, 0, 0, 0.2);
+}
+.playlist-section h2 {
+    font-family: var(--font-head);
+    font-size: 2rem;
+    color: var(--accent);
+    text-align: center;
+    margin-bottom: 5px;
+    letter-spacing: 3px;
+}
+.playlist-section .sub-playlist {
+    text-align: center;
+    color: #aa7a7a;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+.playlist-section .player-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+.playlist-section .player-controls button {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 40px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    cursor: pointer;
+    transition: all var(--transition);
+    box-shadow: 0 0 20px rgba(139, 0, 0, 0.3);
+}
+.playlist-section .player-controls button:hover {
+    transform: scale(1.05);
+    background: #aa0000;
+    box-shadow: 0 0 40px rgba(139, 0, 0, 0.5);
+}
+.playlist-section .player-controls .btn-playpause {
+    min-width: 100px;
+}
+.playlist-section .current-song {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #b09a9a;
+    margin-bottom: 15px;
+}
+.playlist-section .current-song span {
+    color: #d4caca;
+    font-weight: 700;
+}
+.playlist-section .daftar-lagu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 350px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+.playlist-section .daftar-lagu::-webkit-scrollbar {
+    width: 4px;
+}
+.playlist-section .daftar-lagu::-webkit-scrollbar-track {
+    background: #1a0f0f;
+}
+.playlist-section .daftar-lagu::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 10px;
+}
+.playlist-section .lagu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 15px;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    border: 1px solid #2a1a1a;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.playlist-section .lagu-item:hover {
+    border-color: var(--accent);
+    background: rgba(139, 0, 0, 0.1);
+    transform: translateX(5px);
+}
+.playlist-section .lagu-item.active {
+    border-color: var(--accent);
+    background: rgba(139, 0, 0, 0.25);
+    box-shadow: 0 0 20px rgba(139, 0, 0, 0.2);
+}
+.playlist-section .lagu-item .no-lagu {
+    font-size: 0.8rem;
+    color: #6b5555;
+    min-width: 30px;
+}
+.playlist-section .lagu-item .judul-lagu {
+    font-size: 0.95rem;
+    color: #d4caca;
+}
+.playlist-section .lagu-item .judul-lagu i {
+    margin-right: 8px;
+    color: var(--accent);
+}
+.playlist-section .lagu-item .penyanyi-lagu {
+    font-size: 0.85rem;
+    color: #6b5555;
+    margin-left: auto;
+}
+.playlist-section .lagu-item .status-play {
+    font-size: 0.8rem;
+    color: var(--accent);
+    margin-left: 8px;
+}
+
+/* === PAGINATION === */
+#pagination {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.page-btn {
+    background: var(--card-bg);
+    border: 1px solid #3a1e1e;
+    color: var(--text);
+    padding: 6px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all var(--transition);
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+}
+.page-btn:hover:not(:disabled) {
+    border-color: var(--accent);
+    background: rgba(139, 0, 0, 0.2);
+}
+.page-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+.page-info {
+    color: #6b5555;
+    font-size: 0.85rem;
+}
+
+@media (max-width: 600px) {
+    .playlist-section { padding: 20px 15px; }
+    .playlist-section h2 { font-size: 1.6rem; }
+    .playlist-section .player-controls button { padding: 8px 16px; font-size: 0.8rem; }
+    .playlist-section .lagu-item { padding: 8px 12px; }
+    .playlist-section .lagu-item .judul-lagu { font-size: 0.85rem; }
+    .playlist-section .daftar-lagu { max-height: 250px; }
+    .page-btn { padding: 4px 12px; font-size: 0.7rem; }
+}
+    
+        /* ---------- RESET & VARIABEL ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --bg: #0d0a0a;
+            --card-bg: #1a1212;
+            --text: #e0d6d6;
+            --accent: #8b0000;
+            --accent-glow: #ff3b3b;
+            --font-head: 'Creepster', cursive;
+            --font-body: 'Roboto Mono', monospace;
+            --shadow: 0 0 20px rgba(139, 0, 0, 0.4);
+            --transition: 0.5s ease;
+            --gradient-start: #0d0a0a;
+            --gradient-end: #1a0f1f;
+        }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-body);
+            min-height: 100vh;
+            padding: 20px;
+            transition: background var(--transition), color var(--transition);
+            overflow-x: hidden;
+            position: relative;
+        }
+        /* Background gradasi bergerak */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end), var(--gradient-start));
+            background-size: 400% 400%;
+            animation: gradientMove 15s ease infinite;
+            z-index: -2;
+        }
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Mode Nyaman (terang) */
+        body.comfort {
+            --bg: #f5efe9;
+            --card-bg: #fffcf7;
+            --text: #2d1f1a;
+            --accent: #a52a2a;
+            --accent-glow: #c0392b;
+            --shadow: 0 0 10px rgba(0,0,0,0.1);
+            --gradient-start: #f5efe9;
+            --gradient-end: #e8ddd0;
+        }
+        body.comfort .glitch { animation: none !important; text-shadow: none !important; }
+        body.comfort .card:hover { transform: none !important; }
+        body.comfort .blood-drip { display: none; }
+        body.comfort .star { opacity: 0.2 !important; }
+        body.comfort .hero-logo img { animation: none !important; }
+        body.comfort .card-struktur, 
+        body.comfort .card-siswa,
+        body.comfort .card-dok {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        /* ---------- BINTANG PARTIKEL ---------- */
+        #stars- {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) ease-in-out infinite alternate;
+        }
+        @keyframes twinkle {
+            0% { opacity: 0.1; transform: scale(0.6); }
+            100% { opacity: 1; transform: scale(1.3); }
+        }
+
+        /* ---------- SCROLLBAR ---------- */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #1a0f0f; }
+        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
+
+        /* ---------- TOMBOL MODE ---------- */
+        .mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 999;
+            background: var(--card-bg);
+            border: 2px solid var(--accent);
+            color: var(--text);
+            padding: 12px 22px;
+            border-radius: 40px;
+            font-family: var(--font-body);
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: all var(--transition);
+            letter-spacing: 1px;
+        }
+        .mode-toggle:hover {
+            background: var(--accent);
+            color: #fff;
+            transform: scale(1.08) rotate(-2deg);
+        }
+        
+
+        /* ---------- KONTENER ---------- */
+        . {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 20px 10px;
+        }
+
+        /* ---------- HERO ---------- */
+        .hero {
+            text-align: center;
+            padding: 60px 20px 40px;
+            border-bottom: 2px solid var(--accent);
+            margin-bottom: 50px;
+            position: relative;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 20%;
+            width: 60%;
+            height: 2px;
+            background: var(--accent);
+            animation: pulseLine 2s infinite;
+        }
+        @keyframes pulseLine {
+            0% { opacity: 0.3; transform: scaleX(0.8); }
+            50% { opacity: 1; transform: scaleX(1); }
+            100% { opacity: 0.3; transform: scaleX(0.8); }
+        }
+
+        /* ===== LOGO SPENSARI (UKURAN SUDAH DISESUAIKAN) ===== */
+        .hero-logo {
+            margin-bottom: 15px;
+        }
+        .hero-logo img {
+            max-width: 320px; /* DIPERBESAR dari 220px agar pas untuk banner */
+            width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            filter: drop-shadow(0 0 25px rgba(139, 0, 0, 0.6)) brightness(0.9);
+            border: 3px solid #4a1a1a;
+            padding: 12px 35px; /* DIPERLEBAR padding kiri-kanan */
+            background: rgba(10, 5, 5, 0.7);
+            border-radius: 12px;
+            transition: 0.3s;
+            animation: float 3s ease-in-out infinite;
+        }
+        .hero-logo img:hover {
+            filter: drop-shadow(0 0 40px #ff0000) brightness(1.1);
+            border-color: #8b0000;
+            animation-play-state: paused;
+        }
+
+        .hero h1 {
+            font-family: var(--font-head);
+            font-size: 4.5rem;
+            letter-spacing: 6px;
+            color: var(--accent);
+            text-shadow: 0 0 30px var(--accent-glow), 0 0 60px #8b000066;
+            animation: flicker 2.5s infinite alternate;
+        }
+        @keyframes flicker {
+            0% { opacity: 0.9; text-shadow: 0 0 10px var(--accent-glow); }
+            50% { opacity: 1; text-shadow: 0 0 30px var(--accent-glow), 0 0 60px #ff000066; }
+            100% { opacity: 0.8; text-shadow: 0 0 5px var(--accent-glow); }
+        }
+        .hero .motto {
+            font-size: 1.4rem;
+            margin: 15px 0;
+            color: #d4baba;
+            letter-spacing: 3px;
+        }
+        .hero .sambutan {
+            max-width: 700px;
+            margin: 20px auto 0;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            background: var(--card-bg);
+            padding: 20px 30px;
+            border-radius: 12px;
+            border-left: 5px solid var(--accent);
+            box-shadow: var(--shadow);
+        }
+
+        /* ---------- STRUKTUR & SISWA ---------- */
+        .struktur, .siswa, .dokumentasi {
+            margin: 60px 0;
+        }
+        .struktur h2, .siswa h2, .dokumentasi h2 {
+            font-family: var(--font-head);
+            font-size: 2.8rem;
+            text-align: center;
+            color: var(--accent);
+            margin-bottom: 30px;
+            letter-spacing: 4px;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .struktur h2::after, .siswa h2::after, .dokumentasi h2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent);
+            animation: pulseLine 2.5s infinite;
+        }
+
+        .grid-struktur {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+        }
+        .card-struktur, .card-siswa, .card-dok {
+            background: var(--card-bg);
+            border: 1px solid #3a1e1e;
+            border-radius: 16px;
+            padding: 20px 25px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all var(--transition);
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+            animation: fadeInUp 0.6s ease forwards;
+            position: relative;
+            overflow: hidden;
+        }
+        .card-struktur:hover, .card-siswa:hover, .card-dok:hover {
+            transform: translateY(-10px) scale(1.02) rotate(0.5deg);
+            border-color: var(--accent);
+            box-shadow: 0 0 40px rgba(139, 0, 0, 0.5);
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .card-struktur {
+            width: 200px;
+        }
+        .card-struktur .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 12px;
+            overflow: hidden;
+            border: 3px solid var(--accent);
+            background: #1a0f0f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--accent);
+            transition: 0.3s;
+        }
+        .card-struktur .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .card-struktur .jabatan {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #aa7a7a;
+        }
+        .card-struktur .nama {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-top: 6px;
+        }
+
+        .grid-siswa {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+        .card-siswa .blood-drip {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 2.5rem;
+            opacity: 0.1;
+            pointer-events: none;
+            transform: rotate(20deg);
+        }
+        .card-siswa .avatar-siswa {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            overflow: hidden;
+            border: 2px solid var(--accent);
+            background: #1a0f0f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        .card-siswa .avatar-siswa img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .card-siswa .no-absen {
+            font-size: 0.75rem;
+            background: var(--accent);
+            color: #fff;
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 20px;
+            margin-bottom: 6px;
+        }
+        .card-siswa .nama-siswa {
+            font-weight: 700;
+            font-size: 1rem;
+            margin: 4px 0;
+        }
+        .card-siswa .gender {
+            font-size: 0.8rem;
+            color: #b08a8a;
+        }
+        .card-siswa .cita {
+            font-size: 0.8rem;
+            background: #1f1212;
+            padding: 3px 10px;
+            border-radius: 30px;
+            display: inline-block;
+            margin-top: 6px;
+            border: 1px solid #4a2a2a;
+        }
+
+        /* ---------- DOKUMENTASI ---------- */
+        .grid-dok {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 25px;
+        }
+        .card-dok {
+            aspect-ratio: 4 / 3;
+            padding: 0;
+            border: 2px solid #3a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .card-dok img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.3s;
+        }
+        .card-dok img:hover {
+            transform: scale(1.1);
+        }
+        .card-dok .placeholder-dok {
+            color: #4a3a3a;
+            font-size: 2rem;
+            text-align: center;
+            padding: 20px;
+        }
+        .card-dok .placeholder-dok i {
+            display: block;
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            color: var(--accent);
+            opacity: 0.4;
+        }
+        .card-dok .placeholder-dok span {
+            font-size: 0.8rem;
+            display: block;
+            color: #6b5555;
+        }
+        
+        /* ========== BERITA ACARA (FITUR BARU) ========== */
+.berita-acara {
+    margin: 60px 0;
+}
+.berita-acara h2 {
+    font-family: var(--font-head);
+    font-size: 2.8rem;
+    text-align: center;
+    color: var(--accent);
+    margin-bottom: 30px;
+    letter-spacing: 4px;
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.berita-acara h2::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--accent);
+    animation: pulseLine 2.5s infinite;
+}
+.grid-berita {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+}
+.card-berita {
+    background: var(--card-bg);
+    border: 2px solid #3a1e1e;
+    border-radius: 16px;
+    padding: 0;
+    text-align: left;
+    box-shadow: var(--shadow);
+    transition: all var(--transition);
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+    animation: fadeInUp 0.6s ease forwards;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.card-berita:hover {
+    transform: translateY(-10px) scale(1.02) rotate(0.5deg);
+    border-color: var(--accent);
+    box-shadow: 0 0 40px rgba(139, 0, 0, 0.5);
+}
+.card-berita .berita-img {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    background: #1a0f0f;
+    border-bottom: 2px solid #3a1e1e;
+}
+.card-berita .berita-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.3s;
+}
+.card-berita .berita-img img:hover {
+    transform: scale(1.05);
+}
+.card-berita .berita-img .placeholder-berita {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #1a1212;
+    color: #4a3a3a;
+}
+.card-berita .berita-img .placeholder-berita i {
+    font-size: 3.5rem;
+    color: var(--accent);
+    opacity: 0.3;
+    margin-bottom: 10px;
+}
+.card-berita .berita-img .placeholder-berita span {
+    font-size: 0.8rem;
+}
+.card-berita .berita-body {
+    padding: 18px 20px 20px;
+}
+.card-berita .berita-tanggal {
+    font-size: 0.7rem;
+    color: #aa7a7a;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+.card-berita .berita-tanggal i {
+    margin-right: 6px;
+    color: var(--accent);
+}
+.card-berita .berita-judul {
+    font-family: var(--font-head);
+    font-size: 1.4rem;
+    color: var(--accent);
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+}
+.card-berita .berita-deskripsi {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #d4caca;
+}
+.card-berita .berita-deskripsi i {
+    color: var(--accent);
+    margin-right: 4px;
+}
+
+/* Aturan Responsif HP untuk Berita */
+@media (max-width: 600px) {
+    .grid-berita { grid-template-columns: 1fr; }
+    .card-berita .berita-img { height: 140px; }
+}
+
+        /* ---------- MEDIA SOSIAL ---------- */
+        .media-sosial {
+            margin: 80px 0 40px;
+            padding: 40px 20px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            border: 1px solid #3a1e1e;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        .media-sosial h2 {
+            font-family: var(--font-head);
+            font-size: 2.5rem;
+            color: var(--accent);
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+        }
+        .media-sosial .sub-medsos {
+            color: #aa7a7a;
+            margin-bottom: 30px;
+        }
+        .grid-medsos {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        .medsos-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text);
+            transition: all var(--transition);
+            padding: 15px 25px;
+            border-radius: 16px;
+            border: 1px solid transparent;
+            min-width: 100px;
+        }
+        .medsos-item:hover {
+            background: rgba(139, 0, 0, 0.2);
+            border-color: var(--accent);
+            transform: translateY(-8px) scale(1.05);
+            text-shadow: 0 0 20px var(--accent-glow);
+        }
+        .medsos-item i {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            transition: 0.3s;
+        }
+        .medsos-item span {
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .medsos-item .fa-instagram { color: #E4405F; }
+        .medsos-item .fa-tiktok { color: #00f2ea; }
+
+        /* ---------- FOOTER ---------- */
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px 0 10px;
+            border-top: 1px solid #2a1a1a;
+            font-size: 0.85rem;
+            color: #6b5555;
+        }
+
+        /* ---------- RESPONSIF ---------- */
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 2.8rem; }
+            .grid-struktur { gap: 15px; }
+            .card-struktur { width: 150px; padding: 15px; }
+            .grid-siswa { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+            .mode-toggle { top: 10px; right: 10px; padding: 8px 14px; font-size: 0.8rem; }
+            .hero-logo img { max-width: 220px; padding: 10px 20px; }
+            .card-struktur .avatar { width: 80px; height: 80px; }
+            .grid-dok { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+            .medsos-item i { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+  
+  <!-- ===== AUDIO BACKSOUND HOROR ===== -->
+<audio id="bg-music" loop src="backsound.mp3" preload="auto"></audio>
+
+
+
+    <div id="stars-"></div>
+    <button class="mode-toggle" id="modeToggle">🌙 Mode Nyaman</button>
+
+    <div class="">
+        <header class="hero">
+            <div class="hero-logo">
+                <img src="logo-spensari-transparent.png" alt="Logo SPENSARI 2024/2027">
+            </div>
+            <h1 class="glitch">IX-H</h1>
+            <p class="motto">⚰️ Berani, Berisik, Berprestasi ⚰️</p>
+            <div class="sambutan">
+                <p>👻 Selamat datang di sarang para pemberani! Kelas IX-H adalah keluarga kecil yang penuh misteri, tawa, dan semangat. Mari kita ukir prestasi bersama — atau jadi bagian dari legenda kelam sekolah ini.</p>
+                <p style="margin-top:10px; font-size:0.9rem; color:#aa7a7a;">— Wali Kelas IX-H</p>
+            </div>
+        </header>
+
+        <section class="struktur">
+            <h2>🧛 Penguasa IX-H</h2>
+            <div class="grid-struktur" id="struktur"></div>
+        </section>
+
+        <section class="siswa">
+            <h2>👻 32 Arwah Penghuni</h2>
+            <div class="grid-siswa" id="siswa"></div>
+        </section>
+
+        <section class="dokumentasi">
+            <h2>📸 Arsip Misteri IX-H</h2>
+            <p class="sub-dok" style="text-align:center; color:#aa7a7a; margin-bottom:30px; font-style:italic;">Potret-potret gaib yang terekam selama perjalanan kelas ini...</p>
+            <div class="grid-dok" id="dokumentasi"></div>
+        </section>
+        
+        <!-- ===== BAGIAN BERITA ACARA (BARU) ===== -->
+<section class="berita-acara">
+    <h2>📜 Berita Acara Kelas</h2>
+    <p style="text-align:center; color:#aa7a7a; margin-bottom:30px; font-style:italic;">Jejak langkah dan ritual yang telah kami lalui...</p>
+    <div class="grid-berita" id="berita"></div>
+</section>
+
+<!-- ===== PLAYLIST LAGU ===== -->
+<section class="playlist-section">
+    <h2>🎶 Playlist Gaib</h2>
+    <p class="sub-playlist">Klik lagu untuk memutar... atau biarkan ia menghantui mimpimu</p>
+
+<!-- Tombol Pilih Mode -->
+<div style="display:flex; justify-content:center; gap:15px; margin-bottom:20px; flex-wrap:wrap;">
+    <button id="modeNormalBtn" class="mode-btn active" style="background:var(--accent); color:#fff; border:none; padding:8px 25px; border-radius:30px; cursor:pointer; font-family:var(--font-body); font-weight:700; transition:0.3s;">
+        🎵 Mode Normal
+    </button>
+    <button id="modeHororBtn" class="mode-btn" style="background:transparent; color:var(--text); border:2px solid #3a1e1e; padding:8px 25px; border-radius:30px; cursor:pointer; font-family:var(--font-body); font-weight:700; transition:0.3s;">
+        👻 Mode Horor
+    </button>
+</div>
+
+    <div class="player-controls">
+        <button class="btn-playpause" id="playPauseBtn">▶️ Putar</button>
+        <button id="prevBtn">⏮️ Sebelumnya</button>
+        <button id="nextBtn">⏭️ Selanjutnya</button>
+    </div>
+
+    <div class="current-song" id="currentSongDisplay">🎵 <span>Belum ada lagu diputar</span></div>
+
+    <div class="daftar-lagu" id="playlist">
+        <!-- Akan diisi oleh JavaScript -->
+    </div>
+
+    <div id="pagination">
+        <!-- Akan diisi oleh JavaScript -->
+    </div>
+</section>
+
+        <section class="media-sosial">
+            <h2>📱 Koneksi Dunia Gaib</h2>
+            <p class="sub-medsos">Ikuti jejak kami di alam maya (atau alam baka?)</p>
+            <div class="grid-medsos">
+                <a href="https://www.instagram.com/theclass.of_ixh" class="medsos-item" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                    <span>Instagram</span>
+                </a>
+                <a href="https://www.tiktok.com/@theclass.of_ixh" class="medsos-item" target="_blank">
+                    <i class="fab fa-tiktok"></i>
+                    <span>TikTok</span>
+                </a>
+            </div>
+            <p style="margin-top:20px; font-size:0.8rem; color:#6b5555;"></p>
+        </section>
+
+        <footer class="footer">
+            &copy; 2026 · Kelas IX-H · Dibangun dengan darah, keringat, dan sesajen.
+        </footer>
+    </div>
+
+    <script>
+        // BINTANG PARTIKEL (80 bintang)
+        const stars = document.getElementById('stars-');
+        if (stars) {
+            for (let i = 0; i < 80; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                const size = Math.random() * 4 + 1.5;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.setProperty('--duration', (Math.random() * 4 + 2) + 's');
+                star.style.animationDelay = (Math.random() * 6) + 's';
+                stars.appendChild(star);
+            }
+        }
+
+        // DATA STRUKTUR
+        const struktur = [
+            { jabatan: 'Wali Kelas', nama: 'Ibu Siti Nur Syamsyiah, S.Pd' },
+            { jabatan: 'Ketua Kelas', nama: 'Hikmal Syukri Febriyanto' },
+            { jabatan: 'Wakil Ketua', nama: 'Rafi Azka Zaidan' },
+            { jabatan: 'Bendahara 1', nama: 'Siti Aisyah' },
+            { jabatan: 'Bendahara 2', nama: 'Gilang Ramadhan' },
+            { jabatan: 'Sekretaris 1', nama: 'Dewi Lestari' },
+            { jabatan: 'Sekretaris 2', nama: 'Andi Saputra' }
+        ];
+
+        // DATA 32 SISWA
+        const siswaData = [
+            { no: 1, nama: 'Aditya Putra', gender: 'L', cita: 'Pilot' },
+            { no: 2, nama: 'Bella Cahyani', gender: 'P', cita: 'Dokter' },
+            { no: 3, nama: 'Citra Kirana', gender: 'P', cita: 'Arsitek' },
+            { no: 4, nama: 'Daffa Alghifari', gender: 'L', cita: 'Programmer' },
+            { no: 5, nama: 'Elsa Maharani', gender: 'P', cita: 'Guru' },
+            { no: 6, nama: 'Fajar Ramadhan', gender: 'L', cita: 'Polisi' },
+            { no: 7, nama: 'Gita Puspita', gender: 'P', cita: 'Desainer' },
+            { no: 8, nama: 'Hendra Kurniawan', gender: 'L', cita: 'Pengusaha' },
+            { no: 9, nama: 'Indah Permata', gender: 'P', cita: 'Psikolog' },
+            { no: 10, nama: 'Joko Santoso', gender: 'L', cita: 'Tentara' },
+            { no: 11, nama: 'Karina Anindya', gender: 'P', cita: 'Penulis' },
+            { no: 12, nama: 'Leo Pratama', gender: 'L', cita: 'Fotografer' },
+            { no: 13, nama: 'Mega Safitri', gender: 'P', cita: 'Apoteker' },
+            { no: 14, nama: 'Nanda Aulia', gender: 'P', cita: 'Dokter Gigi' },
+            { no: 15, nama: 'Omar Hidayat', gender: 'L', cita: 'Insinyur' },
+            { no: 16, nama: 'Putri Melati', gender: 'P', cita: 'Perawat' },
+            { no: 17, nama: 'Qori Fadilah', gender: 'P', cita: 'Ahli Gizi' },
+            { no: 18, nama: 'Rafi Akbar', gender: 'L', cita: 'Atlet' },
+            { no: 19, nama: 'Sari Indriyani', gender: 'P', cita: 'Ilmuwan' },
+            { no: 20, nama: 'Taufik Hidayat', gender: 'L', cita: 'Montir' },
+            { no: 21, nama: 'Umi Kalsum', gender: 'P', cita: 'Ibu Rumah Tangga' },
+            { no: 22, nama: 'Vino Pratama', gender: 'L', cita: 'Musisi' },
+            { no: 23, nama: 'Winda Oktavia', gender: 'P', cita: 'Model' },
+            { no: 24, nama: 'Xavier Manurung', gender: 'L', cita: 'Akuntan' },
+            { no: 25, nama: 'Yuni Anggraini', gender: 'P', cita: 'Jurnalis' },
+            { no: 26, nama: 'Zaki Firmansyah', gender: 'L', cita: 'Koki' },
+            { no: 27, nama: 'Aisyah Nur', gender: 'P', cita: 'Dosen' },
+            { no: 28, nama: 'Bagas Kurnia', gender: 'L', cita: 'Pialang' },
+            { no: 29, nama: 'Cindy Febriana', gender: 'P', cita: 'Wirausaha' },
+            { no: 30, nama: 'Erik Susanto', gender: 'L', cita: 'Nelayan' },
+            { no: 31, nama: 'Fitriani Dewi', gender: 'P', cita: 'Bidan' },
+            { no: 32, nama: 'Gilang Pambudi', gender: 'L', cita: 'Petani' }
+        ];
+
+        // RENDER STRUKTUR
+        const strukturEl = document.getElementById('struktur');
+        if (struktur) {
+            struktur.forEach((item, idx) => {
+                let fileFoto = '';
+                if (item.jabatan === 'Wali Kelas') fileFoto = 'wali.jpg';
+                else if (item.jabatan === 'Ketua Kelas') fileFoto = 'ketua.jpg';
+                else if (item.jabatan === 'Wakil Ketua') fileFoto = 'wakil.jpg';
+                else if (item.jabatan === 'Bendahara 1') fileFoto = 'bendahara1.jpg';
+                else if (item.jabatan === 'Bendahara 2') fileFoto = 'bendahara2.jpg';
+                else if (item.jabatan === 'Sekretaris 1') fileFoto = 'sekretaris1.jpg';
+                else if (item.jabatan === 'Sekretaris 2') fileFoto = 'sekretaris2.jpg';
+
+                const inisial = item.nama.split(' ').map(kata => kata[0]).join('').toUpperCase();
+                const card = document.createElement('div');
+                card.className = 'card-struktur';
+                card.style.animationDelay = (0.1 * (idx + 1)) + 's';
+                card.innerHTML = `
+                    <div class="avatar">
+                        <img src="${fileFoto}" alt="${item.nama}" onerror="this.style.display='none'; this.parentElement.innerText = '${inisial}';">
+                    </div>
+                    <div class="jabatan">${item.jabatan}</div>
+                    <div class="nama">${item.nama}</div>
+                `;
+                strukturEl.appendChild(card);
+            });
+        }
+
+        // RENDER SISWA
+        const siswa = document.getElementById('siswa');
+        if (siswa) {
+            siswaData.forEach((s, index) => {
+                const fileFoto = s.no + '.jpg';
+                const inisial = s.nama.split(' ').map(kata => kata[0]).join('').toUpperCase();
+                const card = document.createElement('div');
+                card.className = 'card-siswa';
+                card.style.animationDelay = (0.05 * (index + 1)) + 's';
+                card.innerHTML = `
+                    <div class="blood-drip">🩸</div>
+                    <div class="avatar-siswa">
+                        <img src="${fileFoto}" alt="${s.nama}" onerror="this.style.display='none'; this.parentElement.innerText = '${inisial}';">
+                    </div>
+                    <div class="no-absen">#${s.no}</div>
+                    <div class="nama-siswa">${s.nama}</div>
+                    <div class="gender">${s.gender === 'L' ? '♂️ Laki-laki' : '♀️ Perempuan'}</div>
+                    <div class="cita">🎯 ${s.cita}</div>
+                `;
+                siswa.appendChild(card);
+            });
+        }
+
+        // RENDER DOKUMENTASI
+        const dok = document.getElementById('dokumentasi');
+        if (dok) {
+            for (let i = 1; i <= 6; i++) {
+                const card = document.createElement('div');
+                card.className = 'card-dok';
+                card.style.animationDelay = (0.1 * i) + 's';
+                const imgSrc = `dok${i}.jpg`;
+                card.innerHTML = `
+                    <img src="${imgSrc}" alt="Dokumentasi ${i}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="placeholder-dok" style="display:none; flex-direction:column; align-items:center; justify-content:center; width:100%; height:100%;">
+                        <i class="fas fa-film"></i>
+                        <span>Foto ${i} · Segera Diisi</span>
+                    </div>
+                `;
+                dok.appendChild(card);
+            }
+        }
+
+// ============================================================
+// 8. DATA BERITA ACARA (GANTI DENGAN ACARA KELASMU)
+// ============================================================
+const beritaData = [
+    {
+        id: 1,
+        judul: '🏆 Juara Lomba Kebersihan!',
+        tanggal: '10 Agustus 2026',
+        deskripsi: 'Kelas IX-H berhasil meraih juara 1 lomba kebersihan kelas! Kerja keras membersihkan kelas, menata ruangan, dan menghias dengan tema horor membuahkan hasil. Selamat untuk semua penghuni IX-H! 👻🧹',
+        foto: 'acara1.jpg'
+    },
+    {
+        id: 2,
+        judul: 'Study Tour ke Museum',
+        tanggal: '14 September 2026',
+        deskripsi: 'Petualangan seru mengunjungi museum sejarah. Banyak benda-benda kuno yang membuat kami merinding!',
+        foto: 'acara2.jpg'
+    },
+    {
+        id: 3,
+        judul: 'Peringatan Sumpah Pemuda',
+        tanggal: '28 Oktober 2026',
+        deskripsi: 'Kami berpartisipasi dalam lomba paduan suara dan puisi. Semangat juang IX-H membara!',
+        foto: 'acara3.jpg'
+    }
+];
+
+// ============================================================
+// 9. RENDER BERITA ACARA
+// ============================================================
+const berita = document.getElementById('berita');
+if (berita) {
+    beritaData.forEach((item, idx) => {
+        const card = document.createElement('div');
+        card.className = 'card-berita';
+        card.style.animationDelay = (0.15 * (idx + 1)) + 's';
+        card.innerHTML = `
+            <div class="berita-img">
+                <img src="${item.foto}" alt="${item.judul}" onerror="this.style.display='none'; this.parentElement.innerHTML = '<div class=\\'placeholder-berita\\'><i class=\\'fas fa-file-alt\\'></i><span>Foto ${item.judul} belum tersedia</span></div>';">
+            </div>
+            <div class="berita-body">
+                <div class="berita-tanggal"><i class="fas fa-calendar-alt"></i> ${item.tanggal}</div>
+                <div class="berita-judul">${item.judul}</div>
+                <div class="berita-deskripsi"><i class="fas fa-quote-left"></i> ${item.deskripsi}</div>
+            </div>
+        `;
+        berita.appendChild(card);
+    });
+}
+
+        // MODE NYAMAN (FIX)
+        const modeBtn = document.getElementById('modeToggle');
+        if (modeBtn) {
+            modeBtn.addEventListener('click', function() {
+                document.body.classList.toggle('comfort');
+                if (document.body.classList.contains('comfort')) {
+                    this.textContent = '🌕 Mode Horor';
+                } else {
+                    this.textContent = '🌙 Mode Nyaman';
+                }
+            });
+        }
+        
+
+// ============================================================
+// 13. PLAYLIST 32 LAGU (NORMAL + HOROR)
+// ============================================================
+(function() {
+    // ===== DAFTAR LAGU =====
+    const songsNormal = [];
+    for (let i = 1; i <= 32; i++) {
+        songsNormal.push({
+            title: `Lagu Normal ${i}`,
+            artist: `Artis ${i}`,
+            file: `lagu${i}.mp3`
+        });
+    }
+
+    const songsHoror = [];
+    for (let i = 1; i <= 32; i++) {
+        songsHoror.push({
+            title: `Breakbeat Horor ${i}`,
+            artist: `DJ ${i}`,
+            file: `horor${i}.mp3`
+        });
+    }
+
+    let currentMode = 'normal'; // 'normal' atau 'horor'
+    let songs = songsNormal;
+    let currentIndex = 0;
+    let isPlaying = false;
+
+    // ===== KONFIGURASI PAGINASI =====
+    const PER_PAGE = 8;
+    let currentPage = 0;
+    let totalPages = Math.ceil(songs.length / PER_PAGE);
+
+    const audio = new Audio();
+    audio.src = songs[currentIndex].file;
+
+    // DOM Elements
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const currentSongDisplay = document.getElementById('currentSongDisplay');
+    const playlist = document.getElementById('playlist');
+    const pagination = document.getElementById('pagination');
+    const modeNormalBtn = document.getElementById('modeNormalBtn');
+    const modeHororBtn = document.getElementById('modeHororBtn');
+
+    // ===== FUNGSI SWITCH MODE =====
+    function switchMode(mode) {
+        if (mode === currentMode) return;
+        currentMode = mode;
+        songs = mode === 'normal' ? songsNormal : songsHoror;
+        totalPages = Math.ceil(songs.length / PER_PAGE);
+        currentPage = 0;
+        currentIndex = 0;
+        audio.src = songs[currentIndex].file;
+        audio.pause();
+        isPlaying = false;
+        updateUI();
+        renderPlaylist();
+        updateCurrentSongDisplay();
+        updatePagination();
+
+        // Update tombol mode
+        if (mode === 'normal') {
+            modeNormalBtn.style.background = 'var(--accent)';
+            modeNormalBtn.style.color = '#fff';
+            modeNormalBtn.style.border = 'none';
+            modeHororBtn.style.background = 'transparent';
+            modeHororBtn.style.color = 'var(--text)';
+            modeHororBtn.style.border = '2px solid #3a1e1e';
+        } else {
+            modeHororBtn.style.background = 'var(--accent)';
+            modeHororBtn.style.color = '#fff';
+            modeHororBtn.style.border = 'none';
+            modeNormalBtn.style.background = 'transparent';
+            modeNormalBtn.style.color = 'var(--text)';
+            modeNormalBtn.style.border = '2px solid #3a1e1e';
+        }
+        console.log(`🎵 Mode berubah ke: ${mode}`);
+    }
+
+    // ===== FUNGSI RENDER DAFTAR LAGU =====
+    function renderPlaylist() {
+        playlist.innerHTML = '';
+        const start = currentPage * PER_PAGE;
+        const end = Math.min(start + PER_PAGE, songs.length);
+        const pageSongs = songs.slice(start, end);
+
+        pageSongs.forEach((song, idx) => {
+            const globalIndex = start + idx;
+            const item = document.createElement('div');
+            item.className = 'lagu-item';
+            if (globalIndex === currentIndex) item.classList.add('active');
+            let statusIcon = '';
+            if (globalIndex === currentIndex && isPlaying) {
+                statusIcon = '<span class="status-play">▶️</span>';
+            }
+            item.innerHTML = `
+                <span class="no-lagu">${globalIndex + 1}.</span>
+                <span class="judul-lagu"><i class="fas fa-music"></i> ${song.title}</span>
+                <span class="penyanyi-lagu">- ${song.artist} ${statusIcon}</span>
+            `;
+            item.addEventListener('click', () => playSong(globalIndex));
+            playlist.appendChild(item);
+        });
+
+        updatePagination();
+    }
+
+    // ===== FUNGSI PAGINATION =====
+    function renderPagination() {
+        pagination.innerHTML = '';
+        const prevPageBtn = document.createElement('button');
+        prevPageBtn.textContent = '◀ Sebelumnya';
+        prevPageBtn.className = 'page-btn';
+        prevPageBtn.disabled = currentPage === 0;
+        prevPageBtn.addEventListener('click', () => {
+            if (currentPage > 0) {
+                currentPage--;
+                renderPlaylist();
+            }
+        });
+        pagination.appendChild(prevPageBtn);
+
+        const pageInfo = document.createElement('span');
+        pageInfo.textContent = `Halaman ${currentPage + 1} dari ${totalPages}`;
+        pageInfo.className = 'page-info';
+        pagination.appendChild(pageInfo);
+
+        const nextPageBtn = document.createElement('button');
+        nextPageBtn.textContent = 'Selanjutnya ▶';
+        nextPageBtn.className = 'page-btn';
+        nextPageBtn.disabled = currentPage === totalPages - 1;
+        nextPageBtn.addEventListener('click', () => {
+            if (currentPage < totalPages - 1) {
+                currentPage++;
+                renderPlaylist();
+            }
+        });
+        pagination.appendChild(nextPageBtn);
+    }
+
+    function updatePagination() {
+        const btns = pagination.querySelectorAll('.page-btn');
+        if (btns.length >= 2) {
+            btns[0].disabled = currentPage === 0;
+            btns[1].disabled = currentPage === totalPages - 1;
+        }
+        const info = pagination.querySelector('.page-info');
+        if (info) info.textContent = `Halaman ${currentPage + 1} dari ${totalPages}`;
+    }
+
+    // ===== FUNGSI PUTAR LAGU =====
+    function playSong(index) {
+        if (index < 0 || index >= songs.length) return;
+        currentIndex = index;
+        audio.src = songs[currentIndex].file;
+        audio.play().catch(err => console.log('Gagal memutar:', err));
+        isPlaying = true;
+        updateUI();
+        renderPlaylist();
+        updateCurrentSongDisplay();
+    }
+
+    // ===== FUNGSI UPDATE UI =====
+    function updateUI() {
+        playPauseBtn.textContent = isPlaying ? '⏸️ Jeda' : '▶️ Putar';
+        renderPlaylist();
+    }
+
+    // ===== FUNGSI UPDATE DISPLAY LAGU SEKARANG =====
+    function updateCurrentSongDisplay() {
+        const song = songs[currentIndex];
+        currentSongDisplay.innerHTML = `🎵 <span>${song.title}</span> - ${song.artist}`;
+    }
+
+    // ===== EVENT LISTENER =====
+    playPauseBtn.addEventListener('click', function() {
+        if (isPlaying) {
+            audio.pause();
+            isPlaying = false;
+        } else {
+            audio.play().catch(err => console.log('Gagal memutar:', err));
+            isPlaying = true;
+        }
+        updateUI();
+    });
+
+    prevBtn.addEventListener('click', function() {
+        let newIndex = currentIndex - 1;
+        if (newIndex < 0) newIndex = songs.length - 1;
+        playSong(newIndex);
+    });
+
+    nextBtn.addEventListener('click', function() {
+        let newIndex = currentIndex + 1;
+        if (newIndex >= songs.length) newIndex = 0;
+        playSong(newIndex);
+    });
+
+    audio.addEventListener('ended', function() {
+        let newIndex = currentIndex + 1;
+        if (newIndex >= songs.length) newIndex = 0;
+        playSong(newIndex);
+    });
+
+    modeNormalBtn.addEventListener('click', () => switchMode('normal'));
+    modeHororBtn.addEventListener('click', () => switchMode('horor'));
+
+    // ===== INISIALISASI =====
+    renderPagination();
+    renderPlaylist();
+    updateCurrentSongDisplay();
+    updateUI();
+
+    console.log('🎧 Playlist 32 lagu (Normal + Horor) siap digunakan!');
+})();
+
+    </script>
+</body>
+</html>
