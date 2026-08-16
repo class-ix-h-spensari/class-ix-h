@@ -1,0 +1,2984 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IX-H · Kelas Horor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+
+/* ========== TOOLBAR / NAVBAR ========== */
+html {
+    scroll-behavior: smooth;
+}
+.navbar-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    margin: -20px -20px 30px;
+    padding: 0 14px;
+    background: linear-gradient(180deg, rgba(13, 10, 10, 0.97) 0%, rgba(13, 10, 10, 0.9) 100%);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(139, 0, 0, 0.45);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
+}
+.navbar {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 6px;
+    padding: 10px 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) transparent;
+    -webkit-overflow-scrolling: touch;
+}
+.navbar::-webkit-scrollbar {
+    height: 4px;
+}
+.navbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+.navbar::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 10px;
+}
+.navbar .nav-group {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 4px;
+    flex-shrink: 0;
+}
+.navbar .nav-sep {
+    width: 1px;
+    height: 20px;
+    background: rgba(139, 0, 0, 0.35);
+    flex-shrink: 0;
+}
+.navbar a {
+    color: #c9bcbc;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    padding: 7px 14px;
+    border-radius: 30px;
+    transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+    position: relative;
+    font-family: var(--font-body);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+.navbar a:hover {
+    color: #fff;
+    background: rgba(139, 0, 0, 0.28);
+    transform: translateY(-1px);
+}
+.navbar a:active {
+    transform: translateY(0);
+}
+.navbar a.active {
+    color: #fff;
+    background: rgba(139, 0, 0, 0.3);
+    box-shadow: inset 0 0 0 1px var(--accent), 0 0 16px rgba(139, 0, 0, 0.45);
+}
+
+/* ===== LINK KHUSUS LOGIN & SOSMED ===== */
+.navbar .login-link {
+    color: var(--accent-glow);
+    box-shadow: inset 0 0 0 1px var(--accent);
+}
+.navbar .login-link:hover {
+    background: var(--accent);
+    color: #fff;
+}
+.navbar .sosmed-link {
+    color: #b69eff;
+    box-shadow: inset 0 0 0 1px rgba(182, 158, 255, 0.4);
+}
+.navbar .sosmed-link:hover {
+    background: rgba(182, 158, 255, 0.2);
+    box-shadow: inset 0 0 0 1px rgba(182, 158, 255, 0.6);
+}
+
+/* ===== TOMBOL MODE DI TOOLBAR ===== */
+.mode-toggle-nav {
+    background: transparent;
+    box-shadow: inset 0 0 0 1px #4a3a3a;
+    color: var(--text);
+    padding: 7px 16px;
+    border: none;
+    border-radius: 30px;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.25s ease, box-shadow 0.25s ease, color 0.25s ease, transform 0.2s ease;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+.mode-toggle-nav:hover {
+    background: rgba(139, 0, 0, 0.2);
+    box-shadow: inset 0 0 0 1px var(--accent);
+    color: #fff;
+    transform: translateY(-1px);
+}
+.mode-toggle-nav.mode-horor {
+    box-shadow: inset 0 0 0 1px var(--accent);
+    background: rgba(139, 0, 0, 0.15);
+    color: var(--accent-glow);
+}
+
+@media (max-width: 700px) {
+    .navbar-wrap {
+        margin: -20px -20px 24px;
+        padding: 0 8px;
+    }
+    .navbar {
+        gap: 4px;
+        padding: 8px 0;
+        justify-content: flex-start;
+    }
+    .navbar .nav-sep {
+        display: none;
+    }
+    .navbar a {
+        font-size: 0.68rem;
+        padding: 6px 10px;
+        gap: 4px;
+    }
+    .mode-toggle-nav {
+        font-size: 0.65rem;
+        padding: 6px 12px;
+    }
+}
+
+/* Supaya tiap section tidak ketutup toolbar saat dituju dari link navbar */
+.hero,
+.struktur,
+.siswa,
+.dokumentasi,
+.berita-acara,
+.game-section,
+.playlist-section,
+.login-form,
+.media-sosial {
+    scroll-margin-top: 90px;
+}
+@media (max-width: 700px) {
+    .hero,
+    .struktur,
+    .siswa,
+    .dokumentasi,
+    .berita-acara,
+    .game-section,
+    .playlist-section,
+    .login-form,
+    .media-sosial {
+        scroll-margin-top: 74px;
+    }
+}
+      
+    /* ========== PLAYLIST LAGU (PAGINASI) ========== */
+.playlist-section {
+    margin: 60px 0 40px;
+    padding: 25px 20px;
+    background: var(--card-bg);
+    border: 2px solid #3a1e1e;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    transition: all var(--transition);
+}
+.playlist-section:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 40px rgba(139, 0, 0, 0.2);
+}
+.playlist-section h2 {
+    font-family: var(--font-head);
+    font-size: 2rem;
+    color: var(--accent);
+    text-align: center;
+    margin-bottom: 5px;
+    letter-spacing: 3px;
+}
+.playlist-section .sub-playlist {
+    text-align: center;
+    color: #aa7a7a;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+.playlist-section .player-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+.playlist-section .player-controls button {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 40px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    cursor: pointer;
+    transition: all var(--transition);
+    box-shadow: 0 0 20px rgba(139, 0, 0, 0.3);
+}
+.playlist-section .player-controls button:hover {
+    transform: scale(1.05);
+    background: #aa0000;
+    box-shadow: 0 0 40px rgba(139, 0, 0, 0.5);
+}
+.playlist-section .player-controls .btn-playpause {
+    min-width: 100px;
+}
+.playlist-section .current-song {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #b09a9a;
+    margin-bottom: 15px;
+}
+.playlist-section .current-song span {
+    color: #d4caca;
+    font-weight: 700;
+}
+.playlist-section .daftar-lagu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 350px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+.playlist-section .daftar-lagu::-webkit-scrollbar {
+    width: 4px;
+}
+.playlist-section .daftar-lagu::-webkit-scrollbar-track {
+    background: #1a0f0f;
+}
+.playlist-section .daftar-lagu::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 10px;
+}
+.playlist-section .lagu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 15px;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    border: 1px solid #2a1a1a;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.playlist-section .lagu-item:hover {
+    border-color: var(--accent);
+    background: rgba(139, 0, 0, 0.1);
+    transform: translateX(5px);
+}
+.playlist-section .lagu-item.active {
+    border-color: var(--accent);
+    background: rgba(139, 0, 0, 0.25);
+    box-shadow: 0 0 20px rgba(139, 0, 0, 0.2);
+}
+.playlist-section .lagu-item .no-lagu {
+    font-size: 0.8rem;
+    color: #6b5555;
+    min-width: 30px;
+}
+.playlist-section .lagu-item .judul-lagu {
+    font-size: 0.95rem;
+    color: #d4caca;
+}
+.playlist-section .lagu-item .judul-lagu i {
+    margin-right: 8px;
+    color: var(--accent);
+}
+.playlist-section .lagu-item .penyanyi-lagu {
+    font-size: 0.85rem;
+    color: #6b5555;
+    margin-left: auto;
+}
+.playlist-section .lagu-item .status-play {
+    font-size: 0.8rem;
+    color: var(--accent);
+    margin-left: 8px;
+}
+
+/* === PAGINATION === */
+#pagination {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.page-btn {
+    background: var(--card-bg);
+    border: 1px solid #3a1e1e;
+    color: var(--text);
+    padding: 6px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all var(--transition);
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+}
+.page-btn:hover:not(:disabled) {
+    border-color: var(--accent);
+    background: rgba(139, 0, 0, 0.2);
+}
+.page-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+.page-info {
+    color: #6b5555;
+    font-size: 0.85rem;
+}
+
+@media (max-width: 600px) {
+    .playlist-section { padding: 20px 15px; }
+    .playlist-section h2 { font-size: 1.6rem; }
+    .playlist-section .player-controls button { padding: 8px 16px; font-size: 0.8rem; }
+    .playlist-section .lagu-item { padding: 8px 12px; }
+    .playlist-section .lagu-item .judul-lagu { font-size: 0.85rem; }
+    .playlist-section .daftar-lagu { max-height: 250px; }
+    .page-btn { padding: 4px 12px; font-size: 0.7rem; }
+}
+    
+        /* ---------- RESET & VARIABEL ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --bg: #0d0a0a;
+            --card-bg: #1a1212;
+            --text: #e0d6d6;
+            --accent: #8b0000;
+            --accent-glow: #ff3b3b;
+            --font-head: 'Creepster', cursive;
+            --font-body: 'Roboto Mono', monospace;
+            --shadow: 0 0 20px rgba(139, 0, 0, 0.4);
+            --transition: 0.5s ease;
+            --gradient-start: #0d0a0a;
+            --gradient-end: #1a0f1f;
+        }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-body);
+            min-height: 100vh;
+            padding: 20px;
+            transition: background var(--transition), color var(--transition);
+            overflow-x: hidden;
+            position: relative;
+        }
+        /* Background gradasi bergerak */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end), var(--gradient-start));
+            background-size: 400% 400%;
+            animation: gradientMove 15s ease infinite;
+            z-index: -2;
+        }
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Mode Nyaman (terang) */
+        body.comfort {
+            --bg: #f5efe9;
+            --card-bg: #fffcf7;
+            --text: #2d1f1a;
+            --accent: #a52a2a;
+            --accent-glow: #c0392b;
+            --shadow: 0 0 10px rgba(0,0,0,0.1);
+            --gradient-start: #f5efe9;
+            --gradient-end: #e8ddd0;
+        }
+        body.comfort .glitch { animation: none !important; text-shadow: none !important; }
+        body.comfort .card:hover { transform: none !important; }
+        body.comfort .blood-drip { display: none; }
+        body.comfort .star { opacity: 0.2 !important; }
+        body.comfort .hero-logo img { animation: none !important; }
+        body.comfort .card-struktur, 
+        body.comfort .card-siswa,
+        body.comfort .card-dok {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        /* ---------- BINTANG PARTIKEL ---------- */
+        #stars- {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) ease-in-out infinite alternate;
+        }
+        @keyframes twinkle {
+            0% { opacity: 0.1; transform: scale(0.6); }
+            100% { opacity: 1; transform: scale(1.3); }
+        }
+
+        /* ---------- SCROLLBAR ---------- */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #1a0f0f; }
+        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
+        
+
+        /* ---------- KONTENER ---------- */
+        . {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 20px 10px;
+        }
+
+        /* ---------- HERO ---------- */
+        .hero {
+            text-align: center;
+            padding: 60px 20px 40px;
+            border-bottom: 2px solid var(--accent);
+            margin-bottom: 50px;
+            position: relative;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 20%;
+            width: 60%;
+            height: 2px;
+            background: var(--accent);
+            animation: pulseLine 2s infinite;
+        }
+        @keyframes pulseLine {
+            0% { opacity: 0.3; transform: scaleX(0.8); }
+            50% { opacity: 1; transform: scaleX(1); }
+            100% { opacity: 0.3; transform: scaleX(0.8); }
+        }
+
+        /* ===== LOGO SPENSARI (UKURAN SUDAH DISESUAIKAN) ===== */
+        .hero-logo {
+            margin-bottom: 15px;
+        }
+        .hero-logo img {
+            max-width: 320px; /* DIPERBESAR dari 220px agar pas untuk banner */
+            width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            filter: drop-shadow(0 0 25px rgba(139, 0, 0, 0.6)) brightness(0.9);
+            border: 3px solid #4a1a1a;
+            padding: 12px 35px; /* DIPERLEBAR padding kiri-kanan */
+            background: rgba(10, 5, 5, 0.7);
+            border-radius: 12px;
+            transition: 0.3s;
+            animation: float 3s ease-in-out infinite;
+        }
+        .hero-logo img:hover {
+            filter: drop-shadow(0 0 40px #ff0000) brightness(1.1);
+            border-color: #8b0000;
+            animation-play-state: paused;
+        }
+
+        .hero h1 {
+            font-family: var(--font-head);
+            font-size: 4.5rem;
+            letter-spacing: 6px;
+            color: var(--accent);
+            text-shadow: 0 0 30px var(--accent-glow), 0 0 60px #8b000066;
+            animation: flicker 2.5s infinite alternate;
+        }
+        @keyframes flicker {
+            0% { opacity: 0.9; text-shadow: 0 0 10px var(--accent-glow); }
+            50% { opacity: 1; text-shadow: 0 0 30px var(--accent-glow), 0 0 60px #ff000066; }
+            100% { opacity: 0.8; text-shadow: 0 0 5px var(--accent-glow); }
+        }
+        .hero .motto {
+            font-size: 1.4rem;
+            margin: 15px 0;
+            color: #d4baba;
+            letter-spacing: 3px;
+        }
+        .hero .sambutan {
+            max-width: 700px;
+            margin: 20px auto 0;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            background: var(--card-bg);
+            padding: 20px 30px;
+            border-radius: 12px;
+            border-left: 5px solid var(--accent);
+            box-shadow: var(--shadow);
+        }
+
+        /* ========== VISI & MISI KELAS ========== */
+        .visimisi-section {
+            max-width: 700px;
+            margin: 40px auto 0;
+            padding: 25px 30px;
+            background: var(--card-bg);
+            border: 2px solid #3a1e1e;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            transition: all var(--transition);
+        }
+        .visimisi-section:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 40px rgba(139, 0, 0, 0.2);
+        }
+        .visimisi-section h2 {
+            font-family: var(--font-head);
+            font-size: 1.9rem;
+            color: var(--accent);
+            text-align: center;
+            letter-spacing: 3px;
+            margin-bottom: 18px;
+        }
+        .visimisi-section .visi-blok,
+        .visimisi-section .misi-blok {
+            margin-bottom: 18px;
+        }
+        .visimisi-section .visi-blok:last-child,
+        .visimisi-section .misi-blok:last-child {
+            margin-bottom: 0;
+        }
+        .visimisi-section h3 {
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent-glow);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .visimisi-section .visi-blok p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text);
+            font-style: italic;
+            border-left: 3px solid var(--accent);
+            padding-left: 14px;
+        }
+        .visimisi-section .misi-blok ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .visimisi-section .misi-blok li {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text);
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid #2a1a1a;
+            border-radius: 10px;
+            padding: 10px 14px;
+            transition: 0.3s;
+        }
+        .visimisi-section .misi-blok li:hover {
+            border-color: var(--accent);
+            background: rgba(139, 0, 0, 0.1);
+            transform: translateX(4px);
+        }
+        .visimisi-section .misi-blok li i {
+            color: var(--accent);
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+        @media (max-width: 600px) {
+            .visimisi-section {
+                padding: 20px 18px;
+            }
+            .visimisi-section h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* ---------- STRUKTUR & SISWA ---------- */
+        .struktur, .siswa, .dokumentasi {
+            margin: 60px 0;
+        }
+        .struktur h2, .siswa h2, .dokumentasi h2 {
+            font-family: var(--font-head);
+            font-size: 2.8rem;
+            text-align: center;
+            color: var(--accent);
+            margin-bottom: 30px;
+            letter-spacing: 4px;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .struktur h2::after, .siswa h2::after, .dokumentasi h2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent);
+            animation: pulseLine 2.5s infinite;
+        }
+
+        .grid-struktur {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+        }
+        .card-struktur, .card-siswa, .card-dok {
+            background: var(--card-bg);
+            border: 1px solid #3a1e1e;
+            border-radius: 16px;
+            padding: 20px 25px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all var(--transition);
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+            animation: fadeInUp 0.6s ease forwards;
+            position: relative;
+            overflow: hidden;
+        }
+        .card-struktur:hover, .card-siswa:hover, .card-dok:hover {
+            transform: translateY(-10px) scale(1.02) rotate(0.5deg);
+            border-color: var(--accent);
+            box-shadow: 0 0 40px rgba(139, 0, 0, 0.5);
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .card-struktur {
+            width: 200px;
+        }
+        .card-struktur .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 12px;
+            overflow: hidden;
+            border: 3px solid var(--accent);
+            background: #1a0f0f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--accent);
+            transition: 0.3s;
+        }
+        .card-struktur .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .card-struktur .jabatan {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #aa7a7a;
+        }
+        .card-struktur .nama {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-top: 6px;
+        }
+
+        .grid-siswa {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+        .card-siswa .blood-drip {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 2.5rem;
+            opacity: 0.1;
+            pointer-events: none;
+            transform: rotate(20deg);
+        }
+        .card-siswa .avatar-siswa {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            overflow: hidden;
+            border: 2px solid var(--accent);
+            background: #1a0f0f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        .card-siswa .avatar-siswa img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .card-siswa .no-absen {
+            font-size: 0.75rem;
+            background: var(--accent);
+            color: #fff;
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 20px;
+            margin-bottom: 6px;
+        }
+        .card-siswa .nama-siswa {
+            font-weight: 700;
+            font-size: 1rem;
+            margin: 4px 0;
+        }
+        .card-siswa .gender {
+            font-size: 0.8rem;
+            color: #b08a8a;
+        }
+        .card-siswa .cita {
+            font-size: 0.8rem;
+            background: #1f1212;
+            padding: 3px 10px;
+            border-radius: 30px;
+            display: inline-block;
+            margin-top: 6px;
+            border: 1px solid #4a2a2a;
+        }
+
+        /* ---------- DOKUMENTASI ---------- */
+        .grid-dok {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 25px;
+        }
+        .card-dok {
+            aspect-ratio: 4 / 3;
+            padding: 0;
+            border: 2px solid #3a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .card-dok img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.3s;
+        }
+        .card-dok img:hover {
+            transform: scale(1.1);
+        }
+        .card-dok .placeholder-dok {
+            color: #4a3a3a;
+            font-size: 2rem;
+            text-align: center;
+            padding: 20px;
+        }
+        .card-dok .placeholder-dok i {
+            display: block;
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            color: var(--accent);
+            opacity: 0.4;
+        }
+        .card-dok .placeholder-dok span {
+            font-size: 0.8rem;
+            display: block;
+            color: #6b5555;
+        }
+        
+        /* ========== BERITA ACARA (FITUR BARU) ========== */
+.berita-acara {
+    margin: 60px 0;
+}
+.berita-acara h2 {
+    font-family: var(--font-head);
+    font-size: 2.8rem;
+    text-align: center;
+    color: var(--accent);
+    margin-bottom: 30px;
+    letter-spacing: 4px;
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.berita-acara h2::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--accent);
+    animation: pulseLine 2.5s infinite;
+}
+.grid-berita {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+}
+.card-berita {
+    background: var(--card-bg);
+    border: 2px solid #3a1e1e;
+    border-radius: 16px;
+    padding: 0;
+    text-align: left;
+    box-shadow: var(--shadow);
+    transition: all var(--transition);
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+    animation: fadeInUp 0.6s ease forwards;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.card-berita:hover {
+    transform: translateY(-10px) scale(1.02) rotate(0.5deg);
+    border-color: var(--accent);
+    box-shadow: 0 0 40px rgba(139, 0, 0, 0.5);
+}
+.card-berita .berita-img {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    background: #1a0f0f;
+    border-bottom: 2px solid #3a1e1e;
+}
+.card-berita .berita-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.3s;
+}
+.card-berita .berita-img img:hover {
+    transform: scale(1.05);
+}
+.card-berita .berita-img .placeholder-berita {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #1a1212;
+    color: #4a3a3a;
+}
+.card-berita .berita-img .placeholder-berita i {
+    font-size: 3.5rem;
+    color: var(--accent);
+    opacity: 0.3;
+    margin-bottom: 10px;
+}
+.card-berita .berita-img .placeholder-berita span {
+    font-size: 0.8rem;
+}
+.card-berita .berita-body {
+    padding: 18px 20px 20px;
+}
+.card-berita .berita-tanggal {
+    font-size: 0.7rem;
+    color: #aa7a7a;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+.card-berita .berita-tanggal i {
+    margin-right: 6px;
+    color: var(--accent);
+}
+.card-berita .berita-judul {
+    font-family: var(--font-head);
+    font-size: 1.4rem;
+    color: var(--accent);
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+}
+.card-berita .berita-deskripsi {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #d4caca;
+}
+.card-berita .berita-deskripsi i {
+    color: var(--accent);
+    margin-right: 4px;
+}
+
+/* Aturan Responsif HP untuk Berita */
+@media (max-width: 600px) {
+    .grid-berita { grid-template-columns: 1fr; }
+    .card-berita .berita-img { height: 140px; }
+}
+
+        /* ---------- MEDIA SOSIAL ---------- */
+        .media-sosial {
+            margin: 80px 0 40px;
+            padding: 40px 20px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            border: 1px solid #3a1e1e;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        .media-sosial h2 {
+            font-family: var(--font-head);
+            font-size: 2.5rem;
+            color: var(--accent);
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+        }
+        .media-sosial .sub-medsos {
+            color: #aa7a7a;
+            margin-bottom: 30px;
+        }
+        .grid-medsos {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        .medsos-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text);
+            transition: all var(--transition);
+            padding: 15px 25px;
+            border-radius: 16px;
+            border: 1px solid transparent;
+            min-width: 100px;
+        }
+        .medsos-item:hover {
+            background: rgba(139, 0, 0, 0.2);
+            border-color: var(--accent);
+            transform: translateY(-8px) scale(1.05);
+            text-shadow: 0 0 20px var(--accent-glow);
+        }
+        .medsos-item i {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            transition: 0.3s;
+        }
+        .medsos-item span {
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .medsos-item .fa-instagram { color: #E4405F; }
+        .medsos-item .fa-tiktok { color: #00f2ea; }
+
+        /* ---------- FOOTER ---------- */
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px 0 10px;
+            border-top: 1px solid #2a1a1a;
+            font-size: 0.85rem;
+            color: #6b5555;
+        }
+
+        /* ---------- RESPONSIF ---------- */
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 2.8rem; }
+            .grid-struktur { gap: 15px; }
+            .card-struktur { width: 150px; padding: 15px; }
+            .grid-siswa { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+            .mode-toggle { top: 10px; right: 10px; padding: 8px 14px; font-size: 0.8rem; }
+            .hero-logo img { max-width: 220px; padding: 10px 20px; }
+            .card-struktur .avatar { width: 80px; height: 80px; }
+            .grid-dok { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+            .medsos-item i { font-size: 2.5rem; }
+        }
+        
+        /* ===== WALI KELAS (LEBIH BESAR & MENONJOL) ===== */
+.bagan-container .bagan-card.wali-card {
+    min-width: 280px;
+    max-width: 350px;
+    padding: 25px 35px;
+    border-color: var(--accent);
+    box-shadow: 0 0 40px rgba(139, 0, 0, 0.3);
+}
+.bagan-container .bagan-card.wali-card .avatar-bagan {
+    width: 100px;
+    height: 100px;
+    font-size: 3rem;
+    border-width: 4px;
+}
+.bagan-container .bagan-card.wali-card .nama-bagan {
+    font-size: 1.2rem;
+}
+.bagan-container .bagan-card.wali-card .jabatan-bagan {
+    font-size: 0.85rem;
+}
+
+@media (max-width: 600px) {
+    .bagan-container .bagan-card.wali-card {
+        min-width: 200px;
+        max-width: 250px;
+        padding: 20px 20px;
+    }
+    .bagan-container .bagan-card.wali-card .avatar-bagan {
+        width: 80px;
+        height: 80px;
+        font-size: 2.2rem;
+    }
+    .bagan-container .bagan-card.wali-card .nama-bagan {
+        font-size: 1rem;
+    }
+}
+
+/* ===== PANEL ADMIN & LOGIN ===== */
+.admin-panel {
+    margin: 60px 0 40px;
+    padding: 25px 20px;
+    background: var(--card-bg);
+    border: 2px solid #3a1e1e;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.admin-panel h2 {
+    font-family: var(--font-head);
+    font-size: 2rem;
+    color: var(--accent);
+    text-align: center;
+    letter-spacing: 3px;
+}
+.admin-panel input, .admin-panel textarea {
+    font-family: var(--font-body);
+    color: var(--text);
+}
+.admin-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 8px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+.admin-item .info {
+    font-size: 0.85rem;
+    color: #b09a9a;
+}
+.admin-item .info strong {
+    color: #d4caca;
+}
+.admin-item button {
+    background: transparent;
+    border: 1px solid #3a1e1e;
+    color: var(--text);
+    padding: 4px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    transition: 0.3s;
+}
+.admin-item button:hover {
+    border-color: var(--accent);
+    background: rgba(139,0,0,0.2);
+}
+.admin-item .btn-hapus:hover {
+    border-color: #ff4444;
+    color: #ff4444;
+}
+
+/* ===== GRID UPLOAD FOTO STRUKTUR & SISWA (ADMIN) ===== */
+.admin-foto-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 10px;
+    max-height: 340px;
+    overflow-y: auto;
+    padding: 6px 6px 6px 2px;
+}
+.admin-foto-grid::-webkit-scrollbar { width: 4px; }
+.admin-foto-grid::-webkit-scrollbar-track { background: #1a0f0f; }
+.admin-foto-grid::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
+.admin-foto-card {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid #2a1a1a;
+    border-radius: 12px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-align: center;
+    transition: 0.3s;
+}
+.admin-foto-card:hover {
+    border-color: var(--accent);
+    background: rgba(139, 0, 0, 0.1);
+}
+.admin-foto-card .thumb {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #241414;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--accent);
+    border: 1px solid #3a1e1e;
+    flex-shrink: 0;
+}
+.admin-foto-card .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.admin-foto-card .nama-mini {
+    font-size: 0.68rem;
+    line-height: 1.25;
+    color: #c9bcbc;
+    min-height: 2.4em;
+}
+.admin-foto-card .upload-label {
+    font-size: 0.65rem;
+    color: var(--accent-glow);
+    border: 1px dashed var(--accent);
+    border-radius: 20px;
+    padding: 4px 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    white-space: nowrap;
+}
+.admin-foto-card .upload-label:hover {
+    background: rgba(139, 0, 0, 0.25);
+}
+.admin-foto-card input[type="file"] {
+    display: none;
+}
+.admin-foto-card .status-upload {
+    font-size: 0.62rem;
+    color: #6b5555;
+    min-height: 1em;
+}
+.login-form {
+    max-width: 400px;
+    margin: 60px auto;
+    padding: 30px;
+    background: var(--card-bg);
+    border: 2px solid #3a1e1e;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    text-align: center;
+}
+.login-form h2 {
+    font-family: var(--font-head);
+    color: var(--accent);
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+}
+.login-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border-radius: 30px;
+    border: 2px solid #3a2a2a;
+    background: rgba(0,0,0,0.3);
+    color: var(--text);
+    font-family: var(--font-body);
+    outline: none;
+}
+.login-form input:focus {
+    border-color: var(--accent);
+}
+.login-form button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 30px;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.login-form button:hover {
+    background: #aa0000;
+}
+.login-form .error {
+    color: #ff7f7f;
+    font-size: 0.85rem;
+    margin-top: 10px;
+      }
+
+/* ========== GAME: TEKA-TEKI SILANG HOROR ========== */
+.game-section {
+    margin: 60px auto;
+    padding: 25px 20px;
+    max-width: 1000px;
+    background: var(--card-bg);
+    border: 2px solid #3a1e1e;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    transition: all var(--transition);
+}
+.game-section h2 {
+    font-family: var(--font-head);
+    font-size: 2rem;
+    color: var(--accent);
+    text-align: center;
+    margin-bottom: 5px;
+    letter-spacing: 3px;
+}
+.sub-game {
+    text-align: center;
+    color: #aa7a7a;
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+    font-style: italic;
+}
+body.comfort .sub-game { color: #8a6a5a; }
+
+.game-statbar {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+.game-stat {
+    background: rgba(0,0,0,0.25);
+    border: 1px solid #2a1a1a;
+    border-radius: 10px;
+    padding: 8px 16px;
+    text-align: center;
+    min-width: 92px;
+}
+body.comfort .game-stat { background: rgba(0,0,0,0.05); border-color: #e0d0c0; }
+.game-stat .lbl {
+    display: block;
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+    color: #6b5555;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+}
+.game-stat .val {
+    display: block;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.game-board {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+}
+.game-gridpanel {
+    background: rgba(0,0,0,0.2);
+    border: 1px solid #2a1a1a;
+    border-radius: 14px;
+    padding: 16px;
+    overflow-x: auto;
+}
+#ttsGrid {
+    display: grid;
+    gap: 2px;
+}
+.tts-cell-wrap { position: relative; width: 28px; height: 28px; }
+.tts-cell-num {
+    position: absolute;
+    top: 0px;
+    left: 2px;
+    font-size: 7px;
+    color: var(--accent);
+    z-index: 2;
+    pointer-events: none;
+    font-weight: 700;
+}
+.tts-cell-input {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    text-transform: uppercase;
+    border: 1px solid #2a1a1a;
+    background: #e8ddd0;
+    color: #1a1212;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 13px;
+    outline: none;
+    box-sizing: border-box;
+    border-radius: 2px;
+}
+.tts-cell-input:focus { border-color: var(--accent); box-shadow: 0 0 6px rgba(139,0,0,0.5); }
+.tts-cell-input.wrong { background: #8b0000; color: #fff; }
+.tts-cell-input.solved { background: #3a2a2a; color: #ff9a9a; border-color: var(--accent); }
+.tts-block { width: 28px; height: 28px; background: transparent; }
+
+.game-actions { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+.game-actions button {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    padding: 9px 16px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all var(--transition);
+}
+.game-actions .btn-cek {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    box-shadow: 0 0 15px rgba(139,0,0,0.3);
+}
+.game-actions .btn-cek:hover { background: #aa0000; transform: scale(1.03); }
+.game-actions .btn-alt {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid #3a1e1e;
+}
+.game-actions .btn-alt:hover { border-color: var(--accent); color: var(--accent); }
+.game-actions button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.game-msg { margin-top: 12px; font-size: 0.8rem; }
+.game-msg.wrong { color: #ff7f7f; }
+.game-msg.solved { color: #b8a98f; }
+
+.game-cluepanel {
+    flex: 1;
+    min-width: 260px;
+    max-width: 340px;
+    background: rgba(0,0,0,0.2);
+    border: 1px solid #2a1a1a;
+    border-radius: 14px;
+    padding: 16px 18px;
+    max-height: 560px;
+    overflow-y: auto;
+}
+.game-cluepanel h3 {
+    font-family: var(--font-head);
+    font-size: 1.1rem;
+    color: var(--accent);
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+.game-cluepanel .arah {
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    color: #6b5555;
+    margin: 12px 0 6px;
+    text-transform: uppercase;
+}
+.game-cluepanel ul { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+.game-cluepanel li {
+    font-size: 0.82rem;
+    line-height: 1.4;
+    color: var(--text);
+    display: flex;
+    gap: 6px;
+}
+.game-cluepanel li span {
+    color: var(--accent);
+    font-weight: 700;
+    min-width: 16px;
+}
+.game-cluepanel::-webkit-scrollbar { width: 4px; }
+.game-cluepanel::-webkit-scrollbar-track { background: #1a0f0f; }
+.game-cluepanel::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
+
+@media (max-width: 600px) {
+    .tts-cell-wrap, .tts-block, .tts-cell-input { width: 24px; height: 24px; }
+    .game-cluepanel { max-width: 100%; }
+}
+
+    </style>
+</head>
+<body>
+
+<!-- ===== TOOLBAR NAVIGASI ===== -->
+<div class="navbar-wrap">
+<nav class="navbar" id="navbar">
+    <div class="nav-group">
+        <a href="#beranda" data-nav>🏠 Beranda</a>
+        <a href="#struktur" data-nav>🧛 Struktur</a>
+        <a href="#siswa" data-nav>👻 Siswa</a>
+        <a href="#dokumentasi" data-nav>📸 Dokumentasi</a>
+        <a href="#berita" data-nav>📜 Berita</a>
+        <a href="#game" data-nav>🎮 Game</a>
+        <a href="#playlist" data-nav>🎵 Playlist</a>
+    </div>
+    <div class="nav-sep"></div>
+    <div class="nav-group">
+        <a href="#loginForm" class="login-link" data-nav>🔐 Login</a>
+        <a href="#mediasosial" class="sosmed-link" data-nav>📱 Sosmed</a>
+        <button class="mode-toggle-nav" id="modeToggleNav">🌙 Mode Nyaman</button>
+    </div>
+</nav>
+</div>
+  
+  <!-- ===== AUDIO BACKSOUND HOROR ===== -->
+<audio id="bg-music" loop src="backsound.mp3" preload="auto"></audio>
+
+
+
+    <div id="stars-"></div>
+
+    <div>
+        <header class="hero" id="beranda">
+            <div class="hero-logo">
+                <img src="logo-spensari-transparent.png" alt="Logo SPENSARI 2024/2027">
+            </div>
+            <h1 class="glitch">IX-H</h1>
+            <p class="motto">⚰️ Berani, Berisik, Berprestasi ⚰️</p>
+            <div class="sambutan">
+                <p>👻 Selamat datang di sarang para pemberani! Kelas IX-H adalah keluarga kecil yang penuh misteri, tawa, dan semangat. Mari kita ukir prestasi bersama — atau jadi bagian dari legenda kelam sekolah ini.</p>
+                <p style="margin-top:10px; font-size:0.9rem; color:#aa7a7a;">— Wali Kelas IX-H</p>
+            </div>
+
+            <div class="visimisi-section">
+                <h2>🕯️ Visi & Misi Kelas</h2>
+                <div class="visi-blok">
+                    <h3><i class="fas fa-skull"></i> Visi</h3>
+                    <p>Mewujudkan Kelas IX-H sebagai kelas yang unggul dalam prestasi, kompak dalam kebersamaan, dan berani menghadapi setiap tantangan layaknya legenda yang tak lekang oleh waktu.</p>
+                </div>
+                <div class="misi-blok">
+                    <h3><i class="fas fa-ghost"></i> Misi</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Membangun rasa kekeluargaan dan solidaritas antarsiswa tanpa membeda-bedakan.</li>
+                        <li><i class="fas fa-check"></i> Meningkatkan semangat belajar dan berprestasi di bidang akademik maupun non-akademik.</li>
+                        <li><i class="fas fa-check"></i> Menumbuhkan keberanian untuk tampil, berpendapat, dan berkarya secara positif.</li>
+                        <li><i class="fas fa-check"></i> Menjaga kedisiplinan, tanggung jawab, dan sopan santun di lingkungan sekolah.</li>
+                        <li><i class="fas fa-check"></i> Menciptakan suasana kelas yang seru, suportif, dan penuh kenangan selama masa sekolah.</li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+
+        <section class="struktur" id="struktur">
+            <h2>🧛 Penguasa IX-H</h2>
+            <div class="grid-struktur" id="strukturGrid"></div>
+        </section>
+
+        <section class="siswa" id="siswa">
+            <h2>👻 32 Arwah Penghuni</h2>
+            <div class="grid-siswa" id="siswaGrid"></div>
+        </section>
+
+        <section class="dokumentasi" id="dokumentasi">
+            <h2>📸 Arsip Misteri IX-H</h2>
+            <p class="sub-dok" style="text-align:center; color:#aa7a7a; margin-bottom:30px; font-style:italic;">Potret-potret gaib yang terekam selama perjalanan kelas ini...</p>
+            <div class="grid-dok" id="dokumentasiGrid"></div>
+        </section>
+        
+        <!-- ===== BAGIAN BERITA ACARA (BARU) ===== -->
+<section class="berita-acara" id="berita">
+    <h2>📜 Berita Acara Kelas</h2>
+    <p style="text-align:center; color:#aa7a7a; margin-bottom:30px; font-style:italic;">Jejak langkah dan ritual yang telah kami lalui...</p>
+    <div class="grid-berita" id="beritaGrid"></div>
+</section>
+
+<!-- ===== GAME TEKA-TEKI SILANG HOROR ===== -->
+<section class="game-section" id="game">
+    <h2>🎮 Teka-Teki Kegelapan</h2>
+    <p class="sub-game">24 misteri menanti dipecahkan. Setiap petunjuk yang dibuka mengurangi skor akhirmu...</p>
+
+    <div class="game-statbar">
+        <div class="game-stat"><span class="lbl">Waktu</span><span class="val" id="ttsTimer">00:00</span></div>
+        <div class="game-stat"><span class="lbl">Terisi Benar</span><span class="val" id="ttsProgress">0/0</span></div>
+        <div class="game-stat"><span class="lbl">Petunjuk</span><span class="val" id="ttsHints">0</span></div>
+        <div class="game-stat"><span class="lbl">Skor Terbaik</span><span class="val" id="ttsBest">—</span></div>
+    </div>
+
+    <div class="game-board">
+        <div class="game-gridpanel">
+            <div id="ttsGrid"></div>
+            <div class="game-actions">
+                <button class="btn-cek" id="ttsCekBtn">Periksa Jawaban</button>
+                <button class="btn-alt" id="ttsHintBtn">Petunjuk (−25)</button>
+                <button class="btn-alt" id="ttsResetBtn">Ulangi</button>
+            </div>
+            <p class="game-msg" id="ttsMsg"></p>
+        </div>
+        <aside class="game-cluepanel">
+            <h3>Petunjuk</h3>
+            <div id="ttsCluesMendatar"></div>
+            <div id="ttsCluesMenurun"></div>
+        </aside>
+    </div>
+</section>
+
+<!-- ===== PLAYLIST LAGU ===== -->
+<section class="playlist-section" id="playlist">
+    <h2>🎶 Playlist Gaib</h2>
+    <p class="sub-playlist">Klik lagu untuk memutar... atau biarkan ia menghantui mimpimu</p>
+
+<!-- Tombol Pilih Mode -->
+<div style="display:flex; justify-content:center; gap:15px; margin-bottom:20px; flex-wrap:wrap;">
+    <button id="modeNormalBtn" class="mode-btn active" style="background:var(--accent); color:#fff; border:none; padding:8px 25px; border-radius:30px; cursor:pointer; font-family:var(--font-body); font-weight:700; transition:0.3s;">
+        🎵 Mode Normal
+    </button>
+    <button id="modeHororBtn" class="mode-btn" style="background:transparent; color:var(--text); border:2px solid #3a1e1e; padding:8px 25px; border-radius:30px; cursor:pointer; font-family:var(--font-body); font-weight:700; transition:0.3s;">
+        👻 Mode Horor
+    </button>
+</div>
+
+    <div class="player-controls">
+        <button class="btn-playpause" id="playPauseBtn">▶️ Putar</button>
+        <button id="prevBtn">⏮️ Sebelumnya</button>
+        <button id="nextBtn">⏭️ Selanjutnya</button>
+    </div>
+
+    <div class="current-song" id="currentSongDisplay">🎵 <span>Belum ada lagu diputar</span></div>
+
+    <div class="daftar-lagu" id="daftarLaguList">
+        <!-- Akan diisi oleh JavaScript -->
+    </div>
+
+    <div id="pagination">
+        <!-- Akan diisi oleh JavaScript -->
+    </div>
+</section>
+
+<!-- ===== LOGIN FORM ===== -->
+<div class="login-form" id="loginForm">
+    <h2>🔐 Login Penguasa</h2>
+    <input type="text" id="loginUsername" placeholder="Username">
+    <input type="password" id="loginPassword" placeholder="Password">
+    <button id="loginBtn">Masuk</button>
+<div class="error" id="loginError"></div>
+</div>
+
+<!-- ===== PANEL ADMIN ===== -->
+<section class="admin-panel" id="adminPanel" style="display:none;">
+    <h2>👑 Panel Penguasa IX-H</h2>
+    <p style="color:#aa7a7a; margin-bottom:20px;">Kelola konten kelas dari sini...</p>
+    
+    <button id="logoutBtn" style="background:var(--accent); color:#fff; border:none; padding:8px 20px; border-radius:30px; cursor:pointer; margin-bottom:20px;">🚪 Logout</button>
+
+    <!-- KELOLA FOTO STRUKTUR & SISWA -->
+    <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:12px; margin-bottom:20px;">
+        <h3 style="color:var(--accent); font-family:var(--font-head);">🖼️ Kelola Foto Struktur & Siswa</h3>
+        <p style="color:#8a7070; font-size:0.8rem; margin-top:6px;">Pilih foto langsung dari perangkatmu untuk tiap orang, tidak perlu upload manual ke hosting satu-satu.</p>
+
+        <h4 style="color:var(--text); font-size:0.85rem; margin-top:16px; margin-bottom:8px; letter-spacing:1px;">🧛 Struktur Kelas</h4>
+        <div id="adminFotoStruktur" class="admin-foto-grid"></div>
+
+        <h4 style="color:var(--text); font-size:0.85rem; margin-top:18px; margin-bottom:8px; letter-spacing:1px;">👻 32 Siswa</h4>
+        <div id="adminFotoSiswa" class="admin-foto-grid"></div>
+    </div>
+
+    <!-- KELOLA BERITA -->
+    <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:12px; margin-bottom:20px;">
+        <h3 style="color:var(--accent); font-family:var(--font-head);">📰 Kelola Berita Acara</h3>
+        <div style="display:flex; flex-direction:column; gap:8px; margin-top:10px;">
+            <input type="text" id="adminJudul" placeholder="Judul Berita" style="padding:8px; border-radius:8px; border:1px solid #2a1a1a; background:rgba(0,0,0,0.3); color:var(--text);">
+            <input type="date" id="adminTanggal" style="padding:8px; border-radius:8px; border:1px solid #2a1a1a; background:rgba(0,0,0,0.3); color:var(--text);">
+            <textarea id="adminDeskripsi" placeholder="Deskripsi berita..." style="padding:8px; border-radius:8px; border:1px solid #2a1a1a; background:rgba(0,0,0,0.3); color:var(--text); min-height:60px;"></textarea>
+            <input type="text" id="adminFoto" placeholder="Nama file foto (misal: acara4.jpg)" style="padding:8px; border-radius:8px; border:1px solid #2a1a1a; background:rgba(0,0,0,0.3); color:var(--text);">
+            <button id="tambahBeritaBtn" style="background:var(--accent); color:#fff; border:none; padding:10px; border-radius:30px; cursor:pointer; font-weight:700;">➕ Tambah Berita</button>
+        </div>
+        <div id="adminBeritaList" style="margin-top:15px; max-height:300px; overflow-y:auto;"></div>
+    </div>
+
+    <!-- KELOLA DOKUMENTASI -->
+    <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:12px;">
+        <h3 style="color:var(--accent); font-family:var(--font-head);">📸 Kelola Arsip Memori</h3>
+        <div style="display:flex; gap:8px; margin-top:10px; flex-wrap:wrap;">
+            <input type="text" id="adminDokFoto" placeholder="Nama file foto (misal: dok7.jpg)" style="flex:1; min-width:150px; padding:8px; border-radius:8px; border:1px solid #2a1a1a; background:rgba(0,0,0,0.3); color:var(--text);">
+            <button id="tambahDokBtn" style="background:var(--accent); color:#fff; border:none; padding:8px 20px; border-radius:30px; cursor:pointer; font-weight:700;">➕ Tambah Foto</button>
+        </div>
+        <div id="adminDokList" style="margin-top:15px; max-height:300px; overflow-y:auto;"></div>
+    </div>
+</section>
+      
+        <section class="media-sosial" id="mediasosial">
+            <h2>📱 Koneksi Dunia Gaib</h2>
+            <p class="sub-medsos">Ikuti jejak kami di alam maya (atau alam baka?)</p>
+            <div class="grid-medsos">
+                <a href="https://www.instagram.com/theclass.of_ixh" class="medsos-item" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                    <span>Instagram</span>
+                </a>
+                <a href="https://www.tiktok.com/@theclass.of_ixh" class="medsos-item" target="_blank">
+                    <i class="fab fa-tiktok"></i>
+                    <span>TikTok</span>
+                </a>
+            </div>
+            <p style="margin-top:20px; font-size:0.8rem; color:#6b5555;"></p>
+        </section>
+
+        <footer class="footer">
+            &copy; 2026 · Kelas IX-H · Dibangun dengan darah, keringat, dan sesajen.
+        </footer>
+    </div>
+
+    <script>
+        // BINTANG PARTIKEL (80 bintang)
+        const stars = document.getElementById('stars-');
+        if (stars) {
+            for (let i = 0; i < 80; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                const size = Math.random() * 4 + 1.5;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.setProperty('--duration', (Math.random() * 4 + 2) + 's');
+                star.style.animationDelay = (Math.random() * 6) + 's';
+                stars.appendChild(star);
+            }
+        }
+
+        // DATA STRUKTUR
+        const struktur = [
+            { jabatan: 'Wali Kelas', nama: 'Ibu Siti Nur Syamsyiah, S.Pd' },
+            { jabatan: 'Ketua Kelas', nama: 'Hikmal Syukri Febriyanto' },
+            { jabatan: 'Wakil Ketua', nama: 'Rafi Azka Zaidan' },
+            { jabatan: 'Bendahara 1', nama: 'Sabrina Nur Salsabila' },
+            { jabatan: 'Bendahara 2', nama: 'Afiqa Khairunnisa' },
+            { jabatan: 'Sekretaris 1', nama: 'Safa Nurul Afifah' },
+            { jabatan: 'Sekretaris 2', nama: 'Firsta Septiasa Nur Fitri' },
+            { jabatan: 'Seksi Kebersihan 1', nama: 'Aira Nisathaullah Mumtazah' },
+            { jabatan: 'Seksi Kebersihan 2', nama: 'Vanesh Amelia Putri' },
+            { jabatan: 'Seksi Keamanan 1', nama: 'Awal Nur Ardiansyah' },
+            { jabatan: 'Seksi Keamanan 2', nama: 'Fauzan Setiawan' },
+            { jabatan: 'Seksi Keamanan 3', nama: 'Azam Setia Pratama' }
+        ];
+
+        // DATA 32 SISWA
+        const siswaData = [
+            { no: 1, nama: 'Afiqa Khairunnisa', gender: 'P', cita: 'Polwan' },
+            { no: 2, nama: 'Agisti Safa Nur Ramadhani', gender: 'P', cita: 'Kriminolog' },
+            { no: 3, nama: 'Aira Nisathaullah Mumtazah', gender: 'P', cita: 'Penulis' },
+            { no: 4, nama: 'Awal Nur Ardiansyah', gender: 'L', cita: 'Pengusaha' },
+            { no: 5, nama: 'Axzaan May Ash Haabal', gender: 'L', cita: 'Bos Muda' },
+            { no: 6, nama: 'Azam Setia Pratama', gender: 'L', cita: 'Pengusaha' },
+            { no: 7, nama: 'Fauzan Setiawan', gender: 'L', cita: 'Pengusaha' },
+            { no: 8, nama: 'Firsta Septiasa Nur Fitri', gender: 'P', cita: 'Dokter' },
+            { no: 9, nama: 'Ghani Putra Akmal Muazzam', gender: 'L', cita: 'Pengusaha' },
+            { no: 10, nama: 'Haliza Lutfia Tunisa', gender: 'P', cita: 'Polwan' },
+            { no: 11, nama: 'Herul Arifien', gender: 'L', cita: 'CEO' },
+            { no: 12, nama: 'Hikmal Syukri Febriyanto', gender: 'L', cita: 'Hakim' },
+            { no: 13, nama: 'Intan Nuraeni', gender: 'P', cita: 'Koki' },
+            { no: 14, nama: 'Ismia Arum', gender: 'P', cita: 'Dokter' },
+            { no: 15, nama: 'Mahfiz Verona', gender: 'P', cita: 'Polwan' },
+            { no: 16, nama: 'Maida Astagina Hernawayanto', gender: 'P', cita: 'Guru' },
+            { no: 17, nama: 'Muhammad Ikhsan Maulana', gender: 'L', cita: 'Pengusaha' },
+            { no: 18, nama: 'Muhammad Iqbal Nur Hidayat', gender: 'L', cita: 'Pengusaha' },
+            { no: 19, nama: 'Rafael Dimas Saputra', gender: 'L', cita: 'Bos Muda' },
+            { no: 20, nama: 'Rafi Azka Zaidan', gender: 'L', cita: 'TNI-AL' },
+            { no: 21, nama: 'Reza Nur Pratama', gender: 'L', cita: 'CEO' },
+            { no: 22, nama: 'Reziqq Syah Nur Syarif', gender: 'L', cita: 'TNI-AD' },
+            { no: 23, nama: 'Rifki Dias Aldiansah', gender: 'L', cita: 'Owner Bus' },
+            { no: 24, nama: 'Rizky Afif Pratama', gender: 'L', cita: 'Pengusaha' },
+            { no: 25, nama: 'Rizqa Ramadhani', gender: 'P', cita: 'Dokter' },
+            { no: 26, nama: 'Rizqi Jilan Aprilian P', gender: 'L', cita: 'CEO' },
+            { no: 27, nama: 'Sabian Hafizh Faiddlurahman', gender: 'L', cita: 'Masinis' },
+            { no: 28, nama: 'Sabrina Nur Salsabila', gender: 'P', cita: 'Direktur Tambang' },
+            { no: 29, nama: 'Safa Nurul Afifah', gender: 'P', cita: 'Pramugari' },
+            { no: 30, nama: 'Syafii Nur Fadilah', gender: 'L', cita: 'Pemain Bola' },
+            { no: 31, nama: 'Tria Nur Aisyahrani', gender: 'P', cita: 'Guru' },
+            { no: 32, nama: 'Vanesh Amelia Putri', gender: 'P', cita: 'Polwan' }
+        ];
+
+        window.strukturData = struktur;
+        window.siswaListData = siswaData;
+
+        // Bikin ID unik & konsisten untuk tiap orang (dipakai buat nama file foto di Storage)
+        function slugStruktur(jabatan) {
+            return 'struktur-' + jabatan.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+        }
+        function slugSiswa(no) {
+            return 'siswa-' + no;
+        }
+        window.slugStruktur = slugStruktur;
+        window.slugSiswa = slugSiswa;
+
+// ========== RENDER STRUKTUR & SISWA (WALI KELAS LEBIH BESAR) ==========
+function renderStrukturSiswaCards() {
+    const fotoMap = window.fotoProfilMap || {};
+
+    const strukturContainer = document.getElementById('strukturGrid');
+    if (strukturContainer) {
+        strukturContainer.innerHTML = '';
+        struktur.forEach((item, idx) => {
+            let fileFoto = '';
+            if (item.jabatan === 'Wali Kelas') fileFoto = 'wali.jpg';
+            else if (item.jabatan === 'Ketua Kelas') fileFoto = 'ketua.jpg';
+            else if (item.jabatan === 'Wakil Ketua') fileFoto = 'wakil.jpg';
+            else if (item.jabatan === 'Bendahara 1') fileFoto = 'bendahara1.jpg';
+            else if (item.jabatan === 'Bendahara 2') fileFoto = 'bendahara2.jpg';
+            else if (item.jabatan === 'Sekretaris 1') fileFoto = 'sekretaris1.jpg';
+            else if (item.jabatan === 'Sekretaris 2') fileFoto = 'sekretaris2.jpg';
+            else if (item.jabatan === 'Seksi Kebersihan 1') fileFoto = 'kebersihan1.jpg';
+            else if (item.jabatan === 'Seksi Kebersihan 2') fileFoto = 'kebersihan2.jpg';
+            else if (item.jabatan === 'Seksi Keamanan 1') fileFoto = 'keamanan1.jpg';
+            else if (item.jabatan === 'Seksi Keamanan 2') fileFoto = 'keamanan2.jpg';
+            else if (item.jabatan === 'Seksi Keamanan 3') fileFoto = 'keamanan3.jpg';
+
+            const key = slugStruktur(item.jabatan);
+            const sumberFoto = fotoMap[key] || fileFoto;
+            const inisial = item.nama.split(' ').map(kata => kata[0]).join('').toUpperCase();
+            const card = document.createElement('div');
+
+            // ===== KHUSUS WALI KELAS: TAMBAHKAN CLASS "wali-card" =====
+            if (item.jabatan === 'Wali Kelas') {
+                card.className = 'card-struktur wali-card';
+            } else {
+                card.className = 'card-struktur';
+            }
+
+            card.style.animationDelay = (0.1 * (idx + 1)) + 's';
+            card.innerHTML = `
+                <div class="avatar">
+                    <img src="${sumberFoto}" alt="${item.nama}" onerror="this.style.display='none'; this.parentElement.innerText = '${inisial}';">
+                </div>
+                <div class="jabatan">${item.jabatan}</div>
+                <div class="nama">${item.nama}</div>
+            `;
+            strukturContainer.appendChild(card);
+        });
+    }
+
+    // RENDER SISWA
+    const siswa = document.getElementById('siswaGrid');
+    if (siswa) {
+        siswa.innerHTML = '';
+        siswaData.forEach((s, index) => {
+            const key = slugSiswa(s.no);
+            const fileFotoStatic = s.no + '.jpg';
+            const sumberFoto = fotoMap[key] || fileFotoStatic;
+            const inisial = s.nama.split(' ').map(kata => kata[0]).join('').toUpperCase();
+            const card = document.createElement('div');
+            card.className = 'card-siswa';
+            card.style.animationDelay = (0.05 * (index + 1)) + 's';
+            card.innerHTML = `
+                <div class="blood-drip">🩸</div>
+                <div class="avatar-siswa">
+                    <img src="${sumberFoto}" alt="${s.nama}" onerror="this.style.display='none'; this.parentElement.innerText = '${inisial}';">
+                </div>
+                <div class="no-absen">#${s.no}</div>
+                <div class="nama-siswa">${s.nama}</div>
+                <div class="gender">${s.gender === 'L' ? '♂️ Laki-laki' : '♀️ Perempuan'}</div>
+                <div class="cita">🎯 ${s.cita}</div>
+            `;
+            siswa.appendChild(card);
+        });
+    }
+}
+window.renderStrukturSiswaCards = renderStrukturSiswaCards;
+
+// Render awal (pakai foto statis dulu, akan diperbarui otomatis begitu foto upload dari Firestore masuk)
+renderStrukturSiswaCards();
+
+        // RENDER DOKUMENTASI
+        const dok = document.getElementById('dokumentasiGrid');
+        if (dok) {
+            for (let i = 1; i <= 6; i++) {
+                const card = document.createElement('div');
+                card.className = 'card-dok';
+                card.style.animationDelay = (0.1 * i) + 's';
+                const imgSrc = `dok${i}.jpg`;
+                card.innerHTML = `
+                    <img src="${imgSrc}" alt="Dokumentasi ${i}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="placeholder-dok" style="display:none; flex-direction:column; align-items:center; justify-content:center; width:100%; height:100%;">
+                        <i class="fas fa-film"></i>
+                        <span>Foto ${i} · Segera Diisi</span>
+                    </div>
+                `;
+                dok.appendChild(card);
+            }
+        }
+
+// ============================================================
+// 8. DATA BERITA ACARA (GANTI DENGAN ACARA KELASMU)
+// ============================================================
+const beritaData = [
+    {
+        id: 1,
+        judul: '🏆 Juara Lomba Kebersihan!',
+        tanggal: '10 Agustus 2026',
+        deskripsi: 'Kelas IX-H berhasil meraih juara 1 lomba kebersihan kelas! Kerja keras membersihkan kelas, menata ruangan, dan menghias dengan tema horor membuahkan hasil. Selamat untuk semua penghuni IX-H! 👻🧹',
+        foto: 'acara1.jpg'
+    },
+    {
+        id: 2,
+        judul: 'Study Tour ke Museum',
+        tanggal: '14 September 2026',
+        deskripsi: 'Petualangan seru mengunjungi museum sejarah. Banyak benda-benda kuno yang membuat kami merinding!',
+        foto: 'acara2.jpg'
+    },
+    {
+        id: 3,
+        judul: 'Peringatan Sumpah Pemuda',
+        tanggal: '28 Oktober 2026',
+        deskripsi: 'Kami berpartisipasi dalam lomba paduan suara dan puisi. Semangat juang IX-H membara!',
+        foto: 'acara3.jpg'
+    }
+];
+
+// ============================================================
+// 9. RENDER BERITA ACARA
+// ============================================================
+const berita = document.getElementById('beritaGrid');
+if (berita) {
+    beritaData.forEach((item, idx) => {
+        const card = document.createElement('div');
+        card.className = 'card-berita';
+        card.style.animationDelay = (0.15 * (idx + 1)) + 's';
+        card.innerHTML = `
+            <div class="berita-img">
+                <img src="${item.foto}" alt="${item.judul}" onerror="this.style.display='none'; this.parentElement.innerHTML = '=\\'placeholder-berita\\'><i class=\\'fas fa-file-alt\\'></i><span>Foto ${item.judul} belum tersedia</span></div>';">
+            </div>
+            <div class="berita-body">
+                <div class="berita-tanggal"><i class="fas fa-calendar-alt"></i> ${item.tanggal}</div>
+                <div class="berita-judul">${item.judul}</div>
+                <div class="berita-deskripsi"><i class="fas fa-quote-left"></i> ${item.deskripsi}</div>
+            </div>
+        `;
+        berita.appendChild(card);
+    });
+}
+        
+// ============================================================
+// 13. PLAYLIST 32 LAGU (NORMAL + HOROR)
+// ============================================================
+(function() {
+    // ===== DAFTAR LAGU =====
+    const songsNormal = [];
+    for (let i = 1; i <= 32; i++) {
+        songsNormal.push({
+            title: `Lagu Normal ${i}`,
+            artist: `Artis ${i}`,
+            file: `lagu${i}.mp3`
+        });
+    }
+
+    const songsHoror = [];
+    for (let i = 1; i <= 32; i++) {
+        songsHoror.push({
+            title: `Breakbeat Horor ${i}`,
+            artist: `DJ ${i}`,
+            file: `horor${i}.mp3`
+        });
+    }
+
+    let currentMode = 'normal'; // 'normal' atau 'horor'
+    let songs = songsNormal;
+    let currentIndex = 0;
+    let isPlaying = false;
+
+    // ===== KONFIGURASI PAGINASI =====
+    const PER_PAGE = 8;
+    let currentPage = 0;
+    let totalPages = Math.ceil(songs.length / PER_PAGE);
+
+    const audio = new Audio();
+    audio.src = songs[currentIndex].file;
+
+    // DOM Elements
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const currentSongDisplay = document.getElementById('currentSongDisplay');
+    const playlist = document.getElementById('daftarLaguList');
+    const pagination = document.getElementById('pagination');
+    const modeNormalBtn = document.getElementById('modeNormalBtn');
+    const modeHororBtn = document.getElementById('modeHororBtn');
+
+    // ===== FUNGSI SWITCH MODE =====
+    function switchMode(mode) {
+        if (mode === currentMode) return;
+        currentMode = mode;
+        songs = mode === 'normal' ? songsNormal : songsHoror;
+        totalPages = Math.ceil(songs.length / PER_PAGE);
+        currentPage = 0;
+        currentIndex = 0;
+        audio.src = songs[currentIndex].file;
+        audio.pause();
+        isPlaying = false;
+        updateUI();
+        renderPlaylist();
+        updateCurrentSongDisplay();
+        updatePagination();
+
+        // Update tombol mode
+        if (mode === 'normal') {
+            modeNormalBtn.style.background = 'var(--accent)';
+            modeNormalBtn.style.color = '#fff';
+            modeNormalBtn.style.border = 'none';
+            modeHororBtn.style.background = 'transparent';
+            modeHororBtn.style.color = 'var(--text)';
+            modeHororBtn.style.border = '2px solid #3a1e1e';
+        } else {
+            modeHororBtn.style.background = 'var(--accent)';
+            modeHororBtn.style.color = '#fff';
+            modeHororBtn.style.border = 'none';
+            modeNormalBtn.style.background = 'transparent';
+            modeNormalBtn.style.color = 'var(--text)';
+            modeNormalBtn.style.border = '2px solid #3a1e1e';
+        }
+        console.log(`🎵 Mode berubah ke: ${mode}`);
+    }
+
+    // ===== FUNGSI RENDER DAFTAR LAGU =====
+    function renderPlaylist() {
+        playlist.innerHTML = '';
+        const start = currentPage * PER_PAGE;
+        const end = Math.min(start + PER_PAGE, songs.length);
+        const pageSongs = songs.slice(start, end);
+
+        pageSongs.forEach((song, idx) => {
+            const globalIndex = start + idx;
+            const item = document.createElement('div');
+            item.className = 'lagu-item';
+            if (globalIndex === currentIndex) item.classList.add('active');
+            let statusIcon = '';
+            if (globalIndex === currentIndex && isPlaying) {
+                statusIcon = '<span class="status-play">▶️</span>';
+            }
+            item.innerHTML = `
+                <span class="no-lagu">${globalIndex + 1}.</span>
+                <span class="judul-lagu"><i class="fas fa-music"></i> ${song.title}</span>
+                <span class="penyanyi-lagu">- ${song.artist} ${statusIcon}</span>
+            `;
+            item.addEventListener('click', () => playSong(globalIndex));
+            playlist.appendChild(item);
+        });
+
+        updatePagination();
+    }
+
+    // ===== FUNGSI PAGINATION =====
+    function renderPagination() {
+        pagination.innerHTML = '';
+        const prevPageBtn = document.createElement('button');
+        prevPageBtn.textContent = '◀ Sebelumnya';
+        prevPageBtn.className = 'page-btn';
+        prevPageBtn.disabled = currentPage === 0;
+        prevPageBtn.addEventListener('click', () => {
+            if (currentPage > 0) {
+                currentPage--;
+                renderPlaylist();
+            }
+        });
+        pagination.appendChild(prevPageBtn);
+
+        const pageInfo = document.createElement('span');
+        pageInfo.textContent = `Halaman ${currentPage + 1} dari ${totalPages}`;
+        pageInfo.className = 'page-info';
+        pagination.appendChild(pageInfo);
+
+        const nextPageBtn = document.createElement('button');
+        nextPageBtn.textContent = 'Selanjutnya ▶';
+        nextPageBtn.className = 'page-btn';
+        nextPageBtn.disabled = currentPage === totalPages - 1;
+        nextPageBtn.addEventListener('click', () => {
+            if (currentPage < totalPages - 1) {
+                currentPage++;
+                renderPlaylist();
+            }
+        });
+        pagination.appendChild(nextPageBtn);
+    }
+
+    function updatePagination() {
+        const btns = pagination.querySelectorAll('.page-btn');
+        if (btns.length >= 2) {
+            btns[0].disabled = currentPage === 0;
+            btns[1].disabled = currentPage === totalPages - 1;
+        }
+        const info = pagination.querySelector('.page-info');
+        if (info) info.textContent = `Halaman ${currentPage + 1} dari ${totalPages}`;
+    }
+
+    // ===== FUNGSI PUTAR LAGU =====
+    function playSong(index) {
+        if (index < 0 || index >= songs.length) return;
+        currentIndex = index;
+        audio.src = songs[currentIndex].file;
+        audio.play().catch(err => console.log('Gagal memutar:', err));
+        isPlaying = true;
+        updateUI();
+        renderPlaylist();
+        updateCurrentSongDisplay();
+    }
+
+    // ===== FUNGSI UPDATE UI =====
+    function updateUI() {
+        playPauseBtn.textContent = isPlaying ? '⏸️ Jeda' : '▶️ Putar';
+        renderPlaylist();
+    }
+
+    // ===== FUNGSI UPDATE DISPLAY LAGU SEKARANG =====
+    function updateCurrentSongDisplay() {
+        const song = songs[currentIndex];
+        currentSongDisplay.innerHTML = `🎵 <span>${song.title}</span> - ${song.artist}`;
+    }
+
+    // ===== EVENT LISTENER =====
+    playPauseBtn.addEventListener('click', function() {
+        if (isPlaying) {
+            audio.pause();
+            isPlaying = false;
+        } else {
+            audio.play().catch(err => console.log('Gagal memutar:', err));
+            isPlaying = true;
+        }
+        updateUI();
+    });
+
+    prevBtn.addEventListener('click', function() {
+        let newIndex = currentIndex - 1;
+        if (newIndex < 0) newIndex = songs.length - 1;
+        playSong(newIndex);
+    });
+
+    nextBtn.addEventListener('click', function() {
+        let newIndex = currentIndex + 1;
+        if (newIndex >= songs.length) newIndex = 0;
+        playSong(newIndex);
+    });
+
+    audio.addEventListener('ended', function() {
+        let newIndex = currentIndex + 1;
+        if (newIndex >= songs.length) newIndex = 0;
+        playSong(newIndex);
+    });
+
+    modeNormalBtn.addEventListener('click', () => switchMode('normal'));
+    modeHororBtn.addEventListener('click', () => switchMode('horor'));
+
+    // ===== INISIALISASI =====
+    renderPagination();
+    renderPlaylist();
+    updateCurrentSongDisplay();
+    updateUI();
+
+    console.log('🎧 Playlist 32 lagu (Normal + Horor) siap digunakan!');
+})();
+
+
+// ============================================================
+// ADMIN PANEL (LOGIN + CRUD)
+// ============================================================
+(function() {
+    let isAdmin = false;
+    const adminUsername = 'admin';
+    const adminPassword = 'admin123';
+
+    // ===== GANTI DENGAN API KEY IMGBB KAMU (ambil gratis di https://api.imgbb.com/) =====
+    const IMGBB_API_KEY = '7fcd9fabce58ba1c29cebfee98794276';
+
+    const adminPanel = document.getElementById('adminPanel');
+    const loginForm = document.getElementById('loginForm');
+    const loginBtn = document.getElementById('loginBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const loginError = document.getElementById('loginError');
+
+    if (localStorage.getItem('isAdmin') === 'true') {
+        isAdmin = true;
+        adminPanel.style.display = 'block';
+        loginForm.style.display = 'none';
+        loadAdminData();
+        loadDokumentasiAdmin();
+        renderAdminFotoList();
+    }
+
+    loginBtn?.addEventListener('click', function() {
+        const user = document.getElementById('loginUsername').value;
+        const pass = document.getElementById('loginPassword').value;
+        
+        if (user === adminUsername && pass === adminPassword) {
+            isAdmin = true;
+            localStorage.setItem('isAdmin', 'true');
+            adminPanel.style.display = 'block';
+            loginForm.style.display = 'none';
+            loginError.textContent = '';
+            loadAdminData();
+            loadDokumentasiAdmin();
+            renderAdminFotoList();
+        } else {
+            loginError.textContent = '❌ Username atau password salah!';
+        }
+    });
+
+    logoutBtn?.addEventListener('click', function() {
+        isAdmin = false;
+        localStorage.removeItem('isAdmin');
+        adminPanel.style.display = 'none';
+        loginForm.style.display = 'block';
+    });
+
+    async function loadAdminData() {
+        const container = document.getElementById('adminBeritaList');
+        if (!container) return;
+        const db = window.db;
+        if (!db) { container.innerHTML = '<p style="color:#6b5555;">⏳ Menunggu koneksi database...</p>'; return; }
+
+        const q = query(collection(db, "berita"), orderBy("id", "asc"));
+        onSnapshot(q, (snapshot) => {
+            if (snapshot.empty) {
+                container.innerHTML = '<p style="color:#6b5555;">Belum ada berita.</p>';
+                return;
+            }
+            let html = '';
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                html += `
+                    <div class="admin-item">
+                        <div class="info">
+                            <strong>${data.judul}</strong> - ${data.tanggal}
+                        </div>
+                        <div>
+                            <button class="btn-hapus" data-id="${doc.id}">🗑️ Hapus</button>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+            
+            container.querySelectorAll('.btn-hapus').forEach(btn => {
+                btn.addEventListener('click', async function() {
+                    if (confirm('Hapus berita ini?')) {
+                        await deleteDoc(doc(db, "berita", this.dataset.id));
+                    }
+                });
+            });
+        });
+    }
+
+    document.getElementById('tambahBeritaBtn')?.addEventListener('click', async function() {
+        const db = window.db;
+        if (!db) { alert('❌ Database belum siap!'); return; }
+
+        const judul = document.getElementById('adminJudul').value.trim();
+        const tanggal = document.getElementById('adminTanggal').value;
+        const deskripsi = document.getElementById('adminDeskripsi').value.trim();
+        const foto = document.getElementById('adminFoto').value.trim();
+        
+        if (!judul || !tanggal || !deskripsi || !foto) {
+            alert('⚠️ Semua field harus diisi!');
+            return;
+        }
+        
+        try {
+            const q = query(collection(db, "berita"), orderBy("id", "desc"));
+            const snapshot = await getDocs(q);
+            let maxId = 0;
+            snapshot.forEach(doc => {
+                if (doc.data().id > maxId) maxId = doc.data().id;
+            });
+            const newId = maxId + 1;
+            
+            await addDoc(collection(db, "berita"), {
+                id: newId,
+                judul: judul,
+                tanggal: tanggal,
+                deskripsi: deskripsi,
+                foto: foto
+            });
+            
+            document.getElementById('adminJudul').value = '';
+            document.getElementById('adminTanggal').value = '';
+            document.getElementById('adminDeskripsi').value = '';
+            document.getElementById('adminFoto').value = '';
+            alert('✅ Berita berhasil ditambahkan!');
+        } catch (error) {
+            console.error('Gagal tambah berita:', error);
+            alert('❌ Gagal menambahkan berita.');
+        }
+    });
+
+    async function loadDokumentasiAdmin() {
+        const container = document.getElementById('adminDokList');
+        if (!container) return;
+        const db = window.db;
+        if (!db) { container.innerHTML = '<p style="color:#6b5555;">⏳ Menunggu koneksi database...</p>'; return; }
+
+        const q = query(collection(db, "dokumentasi"), orderBy("id", "asc"));
+        onSnapshot(q, (snapshot) => {
+            if (snapshot.empty) {
+                container.innerHTML = '<p style="color:#6b5555;">Belum ada foto dokumentasi.</p>';
+                return;
+            }
+            let html = '';
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                html += `
+                    <div class="admin-item">
+                        <div class="info">
+                            <strong>${data.foto}</strong>
+                        </div>
+                        <div>
+                            <button class="btn-hapus-dok" data-id="${doc.id}">🗑️ Hapus</button>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+            
+            container.querySelectorAll('.btn-hapus-dok').forEach(btn => {
+                btn.addEventListener('click', async function() {
+                    if (confirm('Hapus foto ini?')) {
+                        await deleteDoc(doc(db, "dokumentasi", this.dataset.id));
+                    }
+                });
+            });
+        });
+    }
+
+    document.getElementById('tambahDokBtn')?.addEventListener('click', async function() {
+        const db = window.db;
+        if (!db) { alert('❌ Database belum siap!'); return; }
+
+        const foto = document.getElementById('adminDokFoto').value.trim();
+        if (!foto) {
+            alert('⚠️ Isi nama file foto!');
+            return;
+        }
+        
+        try {
+            const q = query(collection(db, "dokumentasi"), orderBy("id", "desc"));
+            const snapshot = await getDocs(q);
+            let maxId = 0;
+            snapshot.forEach(doc => {
+                if (doc.data().id > maxId) maxId = doc.data().id;
+            });
+            const newId = maxId + 1;
+            
+            await addDoc(collection(db, "dokumentasi"), {
+                id: newId,
+                foto: foto
+            });
+            
+            document.getElementById('adminDokFoto').value = '';
+            alert('✅ Foto berhasil ditambahkan!');
+        } catch (error) {
+            console.error('Gagal tambah foto:', error);
+            alert('❌ Gagal menambahkan foto.');
+        }
+    });
+
+    window.loadAdminData = loadAdminData;
+    window.loadDokumentasiAdmin = loadDokumentasiAdmin;
+
+    // ============================================================
+    // KELOLA FOTO STRUKTUR & SISWA (UPLOAD LANGSUNG DARI PERANGKAT)
+    // ============================================================
+    function buatKartuFoto(key, nama, sublabel) {
+        const fotoMap = window.fotoProfilMap || {};
+        const fotoUrl = fotoMap[key];
+        const inisial = nama.split(' ').map(k => k[0]).join('').toUpperCase();
+        const wrap = document.createElement('div');
+        wrap.className = 'admin-foto-card';
+        wrap.innerHTML = `
+            <div class="thumb">${fotoUrl ? `<img src="${fotoUrl}" alt="${nama}">` : inisial}</div>
+            <div class="nama-mini">${nama}${sublabel ? `<br><span style="color:#6b5555;">${sublabel}</span>` : ''}</div>
+            <label class="upload-label">
+                📤 ${fotoUrl ? 'Ganti' : 'Upload'}
+                <input type="file" accept="image/*">
+            </label>
+            <div class="status-upload"></div>
+        `;
+        const input = wrap.querySelector('input[type="file"]');
+        const status = wrap.querySelector('.status-upload');
+        input.addEventListener('change', function() {
+            const file = this.files && this.files[0];
+            if (file) uploadFotoProfil(key, file, status);
+        });
+        return wrap;
+    }
+
+    function renderAdminFotoList() {
+        const strukturBox = document.getElementById('adminFotoStruktur');
+        const siswaBox = document.getElementById('adminFotoSiswa');
+        if (strukturBox && window.strukturData && window.slugStruktur) {
+            strukturBox.innerHTML = '';
+            window.strukturData.forEach(item => {
+                strukturBox.appendChild(buatKartuFoto(window.slugStruktur(item.jabatan), item.nama, item.jabatan));
+            });
+        }
+        if (siswaBox && window.siswaListData && window.slugSiswa) {
+            siswaBox.innerHTML = '';
+            window.siswaListData.forEach(s => {
+                siswaBox.appendChild(buatKartuFoto(window.slugSiswa(s.no), s.nama, '#' + s.no));
+            });
+        }
+    }
+    window.renderAdminFotoList = renderAdminFotoList;
+
+    async function uploadFotoProfil(key, file, statusEl) {
+        const db = window.db;
+        if (!db) {
+            if (statusEl) statusEl.textContent = '❌ Database belum siap';
+            return;
+        }
+        if (!IMGBB_API_KEY || IMGBB_API_KEY === 'GANTI_DENGAN_API_KEY_IMGBB_KAMU') {
+            if (statusEl) statusEl.textContent = '❌ API key ImgBB belum diisi';
+            return;
+        }
+        if (!file.type.startsWith('image/')) {
+            if (statusEl) statusEl.textContent = '❌ Harus file gambar';
+            return;
+        }
+        if (file.size > 4 * 1024 * 1024) {
+            if (statusEl) statusEl.textContent = '❌ Maks 4MB';
+            return;
+        }
+        try {
+            if (statusEl) statusEl.textContent = '⏳ Mengunggah...';
+            const formData = new FormData();
+            formData.append('image', file);
+            const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+                method: 'POST',
+                body: formData
+            });
+            const hasil = await res.json();
+            if (!hasil.success) throw new Error(hasil.error?.message || 'Upload ke ImgBB gagal');
+            const url = hasil.data.url;
+            await window.setDoc(window.doc(db, 'fotoProfil', key), {
+                url: url,
+                updatedAt: window.serverTimestamp()
+            });
+            if (statusEl) statusEl.textContent = '✅ Tersimpan';
+        } catch (error) {
+            console.error('Gagal upload foto profil:', error);
+            if (statusEl) statusEl.textContent = '❌ Gagal, coba lagi';
+        }
+    }
+})();
+
+// ========== NAVIGASI TOOLBAR (SCROLL & STATUS AKTIF) ==========
+(function () {
+    const navLinks = Array.from(document.querySelectorAll('.navbar a[data-nav]'));
+    if (!navLinks.length) return;
+
+    function getOffset() {
+        return window.innerWidth <= 700 ? 74 : 90;
+    }
+
+    // Klik langsung menuju section dengan offset yang tepat (anti ketutup toolbar)
+    navLinks.forEach((link) => {
+        link.addEventListener('click', function (e) {
+            const id = this.getAttribute('href').slice(1);
+            const target = document.getElementById(id);
+            if (!target) return;
+            e.preventDefault();
+            const top = target.getBoundingClientRect().top + window.pageYOffset - getOffset() + 1;
+            window.scrollTo({ top, behavior: 'smooth' });
+            history.pushState(null, '', '#' + id);
+            navLinks.forEach((a) => a.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+
+    // Highlight tombol sesuai section yang sedang terlihat
+    const sections = navLinks
+        .map((link) => document.getElementById(link.getAttribute('href').slice(1)))
+        .filter(Boolean);
+
+    if ('IntersectionObserver' in window && sections.length) {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        navLinks.forEach((a) => {
+                            a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+                        });
+                    }
+                });
+            },
+            { rootMargin: `-${getOffset() + 10}px 0px -70% 0px`, threshold: 0 }
+        );
+        sections.forEach((sec) => observer.observe(sec));
+    }
+})();
+
+// ========== MODE NYAMAN (TOOLBAR) ==========
+const modeToggleNav = document.getElementById('modeToggleNav');
+if (modeToggleNav) {
+    modeToggleNav.addEventListener('click', function() {
+        document.body.classList.toggle('comfort');
+        if (document.body.classList.contains('comfort')) {
+            this.textContent = '🌕 Mode Horor';
+            this.classList.add('mode-horor');
+        } else {
+            this.textContent = '🌙 Mode Nyaman';
+            this.classList.remove('mode-horor');
+        }
+    });
+  }
+      
+    </script>
+
+<!-- ===== GAME: TEKA-TEKI SILANG HOROR ===== -->
+<script>
+(function () {
+  // ---------- 24 SOAL ----------
+  const WORDS = [
+    { word: "KUNTILANAK", clue: "Hantu wanita berambut panjang, sering terdengar tertawa melengking di malam sepi." },
+    { word: "POCONG", clue: "Hantu terbungkus kain kafan, konon bisa melompat-lompat karena tali kafannya belum dilepas." },
+    { word: "TUYUL", clue: "Makhluk kecil botak, peliharaan dukun untuk mencuri uang." },
+    { word: "GENDERUWO", clue: "Makhluk besar berbulu lebat, suka menghuni pohon besar atau rumah kosong." },
+    { word: "LEAK", clue: "Sosok ilmu hitam dari Bali, konon bisa berubah jadi kepala terbang membawa usus." },
+    { word: "JENGLOT", clue: "Sosok mini bertaring tajam, katanya perlu darah agar tetap awet." },
+    { word: "SUNDELBOLONG", clue: "Hantu wanita cantik dari depan, tapi punggungnya berlubang." },
+    { word: "WEWEGOMBEL", clue: "Hantu bertubuh besar yang konon suka menculik anak-anak nakal." },
+    { word: "SANTET", clue: "Ilmu hitam untuk mencelakai orang dari jarak jauh." },
+    { word: "KUYANG", clue: "Hantu kepala terbang dengan usus menjuntai, mirip dengan leak." },
+    { word: "BANASPATI", clue: "Sosok berwujud api yang konon muncul di tengah hutan." },
+    { word: "TUMBAL", clue: "Sebutan untuk korban atau persembahan dalam ritual gaib." },
+    { word: "MISTIS", clue: "Kata sifat untuk sesuatu yang berbau gaib dan sulit dijelaskan akal sehat." },
+    { word: "ANGKER", clue: "Sebutan untuk tempat yang konon dihuni makhluk halus." },
+    { word: "SERAM", clue: "Kata lain dari menakutkan atau mengerikan." },
+    { word: "GAIB", clue: "Sebutan untuk sesuatu yang tidak kasat mata." },
+    { word: "ARWAH", clue: "Sebutan untuk roh orang yang telah meninggal dunia." },
+    { word: "RITUAL", clue: "Upacara adat tertentu yang sering dikaitkan dengan hal mistis." },
+    { word: "LEGENDA", clue: "Cerita rakyat turun-temurun yang dipercaya sebagian orang pernah benar terjadi." },
+    { word: "MITOS", clue: "Cerita yang dipercaya masyarakat meski belum tentu kebenarannya." },
+    { word: "DUKUN", clue: "Sebutan untuk orang yang dianggap punya kekuatan gaib atau ilmu pengobatan tradisional." },
+    { word: "JIMAT", clue: "Benda yang dipercaya menyimpan kekuatan magis atau pelindung." },
+    { word: "KUBURAN", clue: "Tempat pemakaman, sering jadi latar cerita horor." },
+    { word: "MALAM", clue: "Waktu yang menurut mitos paling angker, terutama tengah-tengahnya." }
+  ];
+
+  const HINT_COST = 25;
+  const WORD_SCORE = 100;
+  const TIME_PENALTY_PER_10S = 2;
+  const STORAGE_KEY = "ixh_tts_horor_best";
+
+  // ---------- GENERATOR CROSSWORD ----------
+  function buildCrossword(wordList) {
+    const SIZE = 40;
+    const CENTER = Math.floor(SIZE / 2);
+    let grid = Array.from({ length: SIZE }, () => Array(SIZE).fill(null));
+    const placed = [];
+
+    function canPlace(word, row, col, dir) {
+      if (dir === "across") {
+        if (col < 0 || col + word.length > SIZE || row < 0 || row >= SIZE) return false;
+        if (col - 1 >= 0 && grid[row][col - 1] !== null) return false;
+        if (col + word.length < SIZE && grid[row][col + word.length] !== null) return false;
+      } else {
+        if (row < 0 || row + word.length > SIZE || col < 0 || col >= SIZE) return false;
+        if (row - 1 >= 0 && grid[row - 1][col] !== null) return false;
+        if (row + word.length < SIZE && grid[row + word.length][col] !== null) return false;
+      }
+      for (let i = 0; i < word.length; i++) {
+        const r = dir === "across" ? row : row + i;
+        const c = dir === "across" ? col + i : col;
+        const existing = grid[r][c];
+        if (existing !== null) {
+          if (existing !== word[i]) return false;
+        } else {
+          if (dir === "across") {
+            if (r - 1 >= 0 && grid[r - 1][c] !== null) return false;
+            if (r + 1 < SIZE && grid[r + 1][c] !== null) return false;
+          } else {
+            if (c - 1 >= 0 && grid[r][c - 1] !== null) return false;
+            if (c + 1 < SIZE && grid[r][c + 1] !== null) return false;
+          }
+        }
+      }
+      return true;
+    }
+
+    function doPlace(word, row, col, dir) {
+      for (let i = 0; i < word.length; i++) {
+        const r = dir === "across" ? row : row + i;
+        const c = dir === "across" ? col + i : col;
+        grid[r][c] = word[i];
+      }
+    }
+
+    const sorted = wordList.slice().sort((a, b) => b.word.length - a.word.length);
+    const first = sorted[0];
+    const startRow = CENTER;
+    const startCol = CENTER - Math.floor(first.word.length / 2);
+    doPlace(first.word, startRow, startCol, "across");
+    placed.push(Object.assign({}, first, { row: startRow, col: startCol, dir: "across" }));
+
+    const unplaced = [];
+    sorted.slice(1).forEach((item) => {
+      const w = item.word;
+      let best = null;
+      for (const p of placed) {
+        for (let pi = 0; pi < p.word.length; pi++) {
+          for (let wi = 0; wi < w.length; wi++) {
+            if (p.word[pi] !== w[wi]) continue;
+            const newDir = p.dir === "across" ? "down" : "across";
+            let row, col;
+            if (newDir === "down") { row = p.row - wi; col = p.col + pi; }
+            else { row = p.row + pi; col = p.col - wi; }
+            if (canPlace(w, row, col, newDir)) {
+              best = best || { row, col, dir: newDir };
+            }
+          }
+        }
+        if (best) break;
+      }
+      if (best) {
+        doPlace(w, best.row, best.col, best.dir);
+        placed.push(Object.assign({}, item, { row: best.row, col: best.col, dir: best.dir }));
+      } else {
+        unplaced.push(item);
+      }
+    });
+
+    if (unplaced.length) {
+      let maxRow = 0;
+      placed.forEach((p) => {
+        const endRow = p.dir === "down" ? p.row + p.word.length - 1 : p.row;
+        if (endRow > maxRow) maxRow = endRow;
+      });
+      let fbRow = maxRow + 2;
+      unplaced.forEach((item) => {
+        const col = CENTER - Math.floor(item.word.length / 2);
+        let r = fbRow;
+        while (r < SIZE - item.word.length && !canPlace(item.word, r, col, "across")) r++;
+        doPlace(item.word, r, col, "across");
+        placed.push(Object.assign({}, item, { row: r, col, dir: "across" }));
+        fbRow = r + 2;
+      });
+    }
+
+    let minR = SIZE, maxR = 0, minC = SIZE, maxC = 0;
+    for (let r = 0; r < SIZE; r++) for (let c = 0; c < SIZE; c++) {
+      if (grid[r][c] !== null) {
+        if (r < minR) minR = r;
+        if (r > maxR) maxR = r;
+        if (c < minC) minC = c;
+        if (c > maxC) maxC = c;
+      }
+    }
+    const trimmed = [];
+    for (let r = minR; r <= maxR; r++) {
+      const row = [];
+      for (let c = minC; c <= maxC; c++) row.push(grid[r][c]);
+      trimmed.push(row);
+    }
+    placed.forEach((p) => { p.row -= minR; p.col -= minC; });
+
+    const numbers = {};
+    let n = 1;
+    const rows = trimmed.length, cols = trimmed[0].length;
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        if (trimmed[r][c] === null) continue;
+        const startsAcross = (c === 0 || trimmed[r][c - 1] === null) && (c + 1 < cols && trimmed[r][c + 1] !== null);
+        const startsDown = (r === 0 || trimmed[r - 1][c] === null) && (r + 1 < rows && trimmed[r + 1][c] !== null);
+        if (startsAcross || startsDown) numbers[`${r}-${c}`] = n++;
+      }
+    }
+    placed.forEach((p) => { p.number = numbers[`${p.row}-${p.col}`]; });
+
+    return { grid: trimmed, placed, rows, cols };
+  }
+
+  // ---------- STATE & RENDER ----------
+  let puzzle = null, answerCells = null, userGrid = null;
+  let seconds = 0, timerInterval = null, hints = 0, solved = false;
+  let inputEls = {};
+
+  function init() {
+    puzzle = buildCrossword(WORDS);
+    answerCells = puzzle.grid;
+    userGrid = answerCells.map((row) => row.map((c) => (c === null ? null : "")));
+    renderGrid();
+    renderClues();
+    resetStats();
+    loadBest();
+    startTimer();
+  }
+
+  function renderGrid() {
+    const container = document.getElementById("ttsGrid");
+    container.innerHTML = "";
+    container.style.gridTemplateColumns = `repeat(${puzzle.cols}, 28px)`;
+    container.style.gridTemplateRows = `repeat(${puzzle.rows}, 28px)`;
+    inputEls = {};
+    const numberMap = {};
+    puzzle.placed.forEach((p) => { if (p.number) numberMap[`${p.row}-${p.col}`] = p.number; });
+
+    for (let r = 0; r < puzzle.rows; r++) {
+      for (let c = 0; c < puzzle.cols; c++) {
+        const key = `${r}-${c}`;
+        if (answerCells[r][c] === null) {
+          const block = document.createElement("div");
+          block.className = "tts-block";
+          container.appendChild(block);
+          continue;
+        }
+        const wrap = document.createElement("div");
+        wrap.className = "tts-cell-wrap";
+        if (numberMap[key]) {
+          const num = document.createElement("span");
+          num.className = "tts-cell-num";
+          num.textContent = numberMap[key];
+          wrap.appendChild(num);
+        }
+        const input = document.createElement("input");
+        input.className = "tts-cell-input";
+        input.maxLength = 1;
+        input.dataset.row = r;
+        input.dataset.col = c;
+        input.addEventListener("input", onCellInput);
+        wrap.appendChild(input);
+        container.appendChild(wrap);
+        inputEls[key] = input;
+      }
+    }
+  }
+
+  function onCellInput(e) {
+    if (solved) return;
+    const el = e.target;
+    let val = el.value.slice(-1).toUpperCase();
+    if (val && !/[A-Z]/.test(val)) { el.value = ""; return; }
+    el.value = val;
+    const r = +el.dataset.row, c = +el.dataset.col;
+    userGrid[r][c] = val;
+    el.classList.remove("wrong");
+    if (val) {
+      const right = inputEls[`${r}-${c + 1}`];
+      const down = inputEls[`${r + 1}-${c}`];
+      if (right) right.focus();
+      else if (down) down.focus();
+    }
+    updateProgress();
+  }
+
+  function renderClues() {
+    const across = puzzle.placed.filter((p) => p.dir === "across").sort((a, b) => a.number - b.number);
+    const down = puzzle.placed.filter((p) => p.dir === "down").sort((a, b) => a.number - b.number);
+    document.getElementById("ttsCluesMendatar").innerHTML =
+      '<p class="arah">Mendatar</p><ul>' + across.map((p) => `<li><span>${p.number}.</span>${p.clue}</li>`).join("") + "</ul>";
+    document.getElementById("ttsCluesMenurun").innerHTML =
+      '<p class="arah">Menurun</p><ul>' + down.map((p) => `<li><span>${p.number}.</span>${p.clue}</li>`).join("") + "</ul>";
+  }
+
+  function updateProgress() {
+    let correctWords = 0;
+    puzzle.placed.forEach((p) => {
+      let ok = true;
+      for (let i = 0; i < p.word.length; i++) {
+        const r = p.dir === "down" ? p.row + i : p.row;
+        const c = p.dir === "across" ? p.col + i : p.col;
+        if (userGrid[r][c] !== answerCells[r][c]) ok = false;
+      }
+      if (ok) correctWords++;
+    });
+    document.getElementById("ttsProgress").textContent = `${correctWords}/${puzzle.placed.length}`;
+  }
+
+  function startTimer() {
+    clearInterval(timerInterval);
+    seconds = 0;
+    updateTimerDisplay();
+    timerInterval = setInterval(() => { seconds++; updateTimerDisplay(); }, 1000);
+  }
+  function updateTimerDisplay() {
+    const m = String(Math.floor(seconds / 60)).padStart(2, "0");
+    const s = String(seconds % 60).padStart(2, "0");
+    document.getElementById("ttsTimer").textContent = `${m}:${s}`;
+  }
+
+  function resetStats() {
+    hints = 0;
+    solved = false;
+    document.getElementById("ttsHints").textContent = "0";
+    const msg = document.getElementById("ttsMsg");
+    msg.textContent = "";
+    msg.className = "game-msg";
+    updateProgress();
+  }
+
+  function loadBest() {
+    let best = null;
+    try { best = localStorage.getItem(STORAGE_KEY); } catch (e) {}
+    document.getElementById("ttsBest").textContent = best || "—";
+  }
+  function saveBest(score) {
+    try {
+      const cur = localStorage.getItem(STORAGE_KEY);
+      if (!cur || score > parseInt(cur, 10)) {
+        localStorage.setItem(STORAGE_KEY, score);
+        document.getElementById("ttsBest").textContent = score;
+        return true;
+      }
+    } catch (e) {}
+    return false;
+  }
+
+  function checkAnswers() {
+    let allCorrect = true;
+    for (let r = 0; r < puzzle.rows; r++) {
+      for (let c = 0; c < puzzle.cols; c++) {
+        if (answerCells[r][c] !== null && userGrid[r][c] !== answerCells[r][c]) {
+          allCorrect = false;
+          const el = inputEls[`${r}-${c}`];
+          if (el) el.classList.add("wrong");
+        }
+      }
+    }
+    const msg = document.getElementById("ttsMsg");
+    if (allCorrect) {
+      solved = true;
+      clearInterval(timerInterval);
+      const timePenalty = Math.floor(seconds / 10) * TIME_PENALTY_PER_10S;
+      const score = Math.max(0, WORD_SCORE * puzzle.placed.length - hints * HINT_COST - timePenalty);
+      const isRecord = saveBest(score);
+      msg.textContent = `Terpecahkan dalam ${document.getElementById("ttsTimer").textContent}. Skor akhir: ${score}${isRecord ? " — rekor baru!" : ""}`;
+      msg.className = "game-msg solved";
+      Object.values(inputEls).forEach((el) => { el.disabled = true; el.classList.add("solved"); });
+      document.getElementById("ttsCekBtn").disabled = true;
+      document.getElementById("ttsHintBtn").disabled = true;
+    } else {
+      msg.textContent = "...belum semua tepat. Coba lagi.";
+      msg.className = "game-msg wrong";
+      setTimeout(() => { Object.values(inputEls).forEach((el) => el.classList.remove("wrong")); }, 700);
+    }
+  }
+
+  function useHint() {
+    if (solved) return;
+    const empties = [];
+    for (let r = 0; r < puzzle.rows; r++) for (let c = 0; c < puzzle.cols; c++) {
+      if (answerCells[r][c] !== null && userGrid[r][c] !== answerCells[r][c]) empties.push([r, c]);
+    }
+    if (!empties.length) return;
+    const [r, c] = empties[Math.floor(Math.random() * empties.length)];
+    userGrid[r][c] = answerCells[r][c];
+    const el = inputEls[`${r}-${c}`];
+    if (el) { el.value = answerCells[r][c]; el.classList.remove("wrong"); }
+    hints++;
+    document.getElementById("ttsHints").textContent = hints;
+    updateProgress();
+  }
+
+  function resetGame() {
+    userGrid = answerCells.map((row) => row.map((c) => (c === null ? null : "")));
+    Object.values(inputEls).forEach((el) => {
+      el.value = "";
+      el.disabled = false;
+      el.classList.remove("wrong", "solved");
+    });
+    resetStats();
+    document.getElementById("ttsCekBtn").disabled = false;
+    document.getElementById("ttsHintBtn").disabled = false;
+    startTimer();
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    if (!document.getElementById("ttsGrid")) return;
+    init();
+    document.getElementById("ttsCekBtn").addEventListener("click", checkAnswers);
+    document.getElementById("ttsHintBtn").addEventListener("click", useHint);
+    document.getElementById("ttsResetBtn").addEventListener("click", resetGame);
+  });
+})();
+</script>
+
+<!-- ===== FIREBASE ===== -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-analytics.js";
+    import { 
+        getFirestore, 
+        collection, 
+        addDoc, 
+        getDocs, 
+        query, 
+        where, 
+        orderBy, 
+        onSnapshot, 
+        deleteDoc, 
+        doc, 
+        setDoc,
+        serverTimestamp 
+    } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyBYETJys86sJ6ziV9HmBa4Ukvs1MFRT9JY",
+        authDomain: "class-ix-h.firebaseapp.com",
+        projectId: "class-ix-h",
+        storageBucket: "class-ix-h.firebasestorage.app",
+        messagingSenderId: "677875481269",
+        appId: "1:677875481269:web:7c916b3b6a344840f7dcfc",
+        measurementId: "G-MMYK8JPEM2"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = getFirestore(app);
+
+    console.log("🔥 Firebase terhubung!");
+    window.db = db;
+
+    // Ekspos fungsi Firestore biar bisa dipakai langsung (tanpa prefix)
+    // di script non-module lain (panel admin, dsb).
+    window.query = query;
+    window.collection = collection;
+    window.addDoc = addDoc;
+    window.getDocs = getDocs;
+    window.where = where;
+    window.orderBy = orderBy;
+    window.onSnapshot = onSnapshot;
+    window.deleteDoc = deleteDoc;
+    window.doc = doc;
+    window.setDoc = setDoc;
+    window.serverTimestamp = serverTimestamp;
+
+    // ============================================================
+    // RENDER BERITA DARI FIRESTORE
+    // ============================================================
+    window.renderBerita = function() {
+        const container = document.getElementById('beritaContainer');
+        if (!container) return;
+
+        const q = query(collection(db, "berita"), orderBy("id", "desc"));
+        onSnapshot(q, (snapshot) => {
+            container.innerHTML = '';
+            if (snapshot.empty) {
+                container.innerHTML = '<p style="text-align:center;color:#6b5555;">Belum ada berita acara.</p>';
+                return;
+            }
+            snapshot.forEach((doc) => {
+                const item = doc.data();
+                const card = document.createElement('div');
+                card.className = 'card-berita';
+                card.innerHTML = `
+                    <div class="berita-img">
+                        <img src="${item.foto}" alt="${item.judul}" onerror="this.style.display='none'; this.parentElement.innerHTML = '=\\'placeholder-berita\\'><i class=\\'fas fa-file-alt\\'></i><span>Foto belum tersedia</span></div>';">
+                    </div>
+                    <div class="berita-body">
+                        <div class="berita-tanggal"><i class="fas fa-calendar-alt"></i> ${item.tanggal}</div>
+                        <div class="berita-judul">${item.judul}</div>
+                        <div class="berita-deskripsi"><i class="fas fa-quote-left"></i> ${item.deskripsi}</div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        });
+    };
+
+    // ============================================================
+    // RENDER DOKUMENTASI DARI FIRESTORE
+    // ============================================================
+    window.renderDokumentasi = function() {
+        const container = document.getElementById('dokumentasiContainer');
+        if (!container) return;
+
+        const q = query(collection(db, "dokumentasi"), orderBy("id", "asc"));
+        onSnapshot(q, (snapshot) => {
+            container.innerHTML = '';
+            if (snapshot.empty) {
+                container.innerHTML = '<p style="text-align:center;color:#6b5555;">Belum ada foto dokumentasi.</p>';
+                return;
+            }
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                const card = document.createElement('div');
+                card.className = 'card-dok';
+                card.innerHTML = `
+                    <img src="${data.foto}" alt="Dokumentasi" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="placeholder-dok" style="display:none; flex-direction:column; align-items:center; justify-content:center; width:100%; height:100%;">
+                        <i class="fas fa-film"></i>
+                        <span>Foto tidak ditemukan</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        });
+    };
+
+    // ============================================================
+    // FOTO PROFIL STRUKTUR & SISWA (DARI STORAGE, DIPETAKAN DI FIRESTORE)
+    // ============================================================
+    window.fotoProfilMap = {};
+    window.renderFotoProfil = function() {
+        const q = collection(db, "fotoProfil");
+        onSnapshot(q, (snapshot) => {
+            const map = {};
+            snapshot.forEach((docSnap) => {
+                const data = docSnap.data();
+                if (data && data.url) map[docSnap.id] = data.url;
+            });
+            window.fotoProfilMap = map;
+            if (typeof window.renderStrukturSiswaCards === 'function') window.renderStrukturSiswaCards();
+            if (typeof window.renderAdminFotoList === 'function') window.renderAdminFotoList();
+        });
+    };
+
+    // ============================================================
+    // RENDER PERTAMA
+    // ============================================================
+    renderBerita();
+    renderDokumentasi();
+    renderFotoProfil();
+    console.log("✅ Website terhubung ke Firestore!");
+</script>
+
+</body>
+</html>
